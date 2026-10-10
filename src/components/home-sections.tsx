@@ -1,0 +1,240 @@
+import { Link } from 'react-router-dom';
+import { ArrowRight, Mail, MapPin, Phone, Star } from 'lucide-react';
+import { ServiceSlider } from './service-slider';
+import { projects } from './data';
+
+export function ServicesSection() {
+    return (
+        <section
+            id="services"
+            className="bg-[#343536] px-6 py-24 text-white sm:py-32"
+        >
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-14 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+                    <div>
+                        <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-[#f19a53]">
+                            What we do
+                        </p>
+                        <h2 className="font-serif text-4xl sm:text-6xl">
+                            Expertise with{' '}
+                            <em className="font-normal text-[#f19a53]">intention.</em>
+                        </h2>
+                    </div>
+
+                    <p className="max-w-xs text-sm leading-6 text-white/60">
+                        From the first conversation to the final walkthrough, every detail
+                        is considered.
+                    </p>
+                </div>
+
+                <ServiceSlider />
+            </div>
+        </section>
+    );
+}
+
+export function FeaturedProjects() {
+    return (
+        <section
+            id="projects"
+            className="mx-auto max-w-7xl px-6 py-24 sm:py-32"
+        >
+            <div className="mb-14 flex items-end justify-between">
+                <div>
+                    <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-[#e87928]">
+                        Featured projects
+                    </p>
+                    <h2 className="font-serif text-4xl sm:text-6xl">
+                        Spaces with a{' '}
+                        <em className="font-normal text-[#e87928]">story.</em>
+                    </h2>
+                </div>
+
+                <Link
+                    to="/our-work"
+                    className="hidden items-center gap-3 text-xs font-bold uppercase tracking-widest sm:flex"
+                >
+                    View all projects <ArrowRight />
+                </Link>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-12">
+                {projects.map((project, index) => (
+                    <Link
+                        to="/our-work"
+                        key={project.title}
+                        className={`group ${index === 0 ? 'md:col-span-7' : 'md:col-span-5'
+                            }`}
+                    >
+                        <div className="relative overflow-hidden">
+                            <img
+                                src={project.image}
+                                alt={project.title}
+                                className={`w-full object-cover transition duration-700 group-hover:scale-105 ${index === 0
+                                    ? 'aspect-[1.1] md:aspect-[1.25]'
+                                    : 'aspect-[1.25]'
+                                    }`}
+                            />
+
+                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-6 pt-20 text-white">
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-[#f19a53]">
+                                    {project.category}
+                                </p>
+                                <h3 className="mt-2 font-serif text-2xl">
+                                    {project.title}
+                                </h3>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </section>
+    );
+}
+
+export function AboutPreview() {
+    return (
+        <section className="bg-[#eeeae1] px-6 py-24 sm:py-32">
+            <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2 lg:items-center">
+                <div>
+                    <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-[#e87928]">
+                        A little about us
+                    </p>
+
+                    <h2 className="font-serif text-4xl leading-tight sm:text-6xl">
+                        Renovating with{' '}
+                        <em className="font-normal text-[#e87928]">heart.</em>
+                    </h2>
+
+                    <p className="mt-7 max-w-xl text-lg leading-8 text-[#343536]/70">
+                        MHR began with a simple belief: renovation should feel exciting,
+                        not overwhelming. Today, our team combines practical experience,
+                        thoughtful design, and genuine care to create homes made for living.
+                    </p>
+
+                    <Link
+                        to="/about-us"
+                        className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#343536] px-6 py-3 text-xs font-bold uppercase tracking-widest text-white hover:bg-[#e87928]"
+                    >
+                        Our story <ArrowRight />
+                    </Link>
+                </div>
+
+                <div className="relative">
+                    <img
+                        src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85"
+                        alt="Warmly renovated modern home interior"
+                        className="aspect-[4/3] w-full object-cover"
+                    />
+
+                    <div className="absolute -bottom-6 -left-6 bg-[#e87928] p-6 text-white">
+                        <p className="font-serif text-4xl">15+</p>
+                        <p className="text-xs font-bold uppercase tracking-widest">
+                            years of craft
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+const testimonials = [
+    'The whole process felt calm and considered. We love how our home works now.',
+    'MHR brought ideas we had not thought of and delivered every detail beautifully.',
+    'Clear communication, excellent workmanship, and a team we would recommend to anyone.',
+];
+
+const names = ['Sarah & James', 'Mia Thompson', 'The Wilson family'];
+
+export function Testimonials() {
+    return (
+        <section className="bg-[#f7f6f2] px-6 py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-12">
+                    <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-[#e87928]">
+                        Kind words
+                    </p>
+
+                    <h2 className="font-serif text-4xl sm:text-6xl">
+                        Loved by the people{' '}
+                        <em className="font-normal text-[#e87928]">we build for.</em>
+                    </h2>
+                </div>
+
+                <div className="grid gap-5 md:grid-cols-3">
+                    {testimonials.map((quote, index) => (
+                        <article
+                            key={quote}
+                            className="border border-[#343536]/10 bg-white p-7 transition hover:-translate-y-2"
+                        >
+                            <div className="flex gap-1 text-[#e87928]">
+                                {[1, 2, 3, 4, 5].map((star) => (
+                                    <Star key={star} fill="currentColor" size={14} />
+                                ))}
+                            </div>
+
+                            <p className="mt-7 font-serif text-2xl leading-snug">
+                                {`“${quote}”`}
+                            </p>
+
+                            <p className="mt-8 text-xs font-bold uppercase tracking-widest text-[#343536]/50">
+                                {names[index]}
+                            </p>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+export function ContactCta() {
+    return (
+        <section className="bg-[#e87928] px-6 py-24 text-white sm:py-32">
+            <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_.8fr] lg:items-end">
+                <div>
+                    <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-white/70">
+                        Let&apos;s talk
+                    </p>
+
+                    <h2 className="max-w-2xl font-serif text-5xl leading-none sm:text-7xl">
+                        Ready to make a change?
+                    </h2>
+
+                    <p className="mt-8 max-w-md text-lg leading-8 text-white/80">
+                        Tell us a little about your project and we&apos;ll be in touch for
+                        a relaxed, no-obligation chat.
+                    </p>
+                </div>
+
+                <div className="space-y-5 text-sm">
+                    <a
+                        href="tel:+6495550123"
+                        className="flex items-center gap-4 border-b border-white/30 pb-5"
+                    >
+                        <Phone /> +64 9 555 0123
+                    </a>
+
+                    <a
+                        href="mailto:hello@mhrrenovations.co.nz"
+                        className="flex items-center gap-4 border-b border-white/30 pb-5"
+                    >
+                        <Mail /> hello@mhrrenovations.co.nz
+                    </a>
+
+                    <p className="flex items-center gap-4">
+                        <MapPin /> Auckland, New Zealand
+                    </p>
+
+                    <Link
+                        to="/contact"
+                        className="mt-6 inline-flex items-center gap-3 rounded-full bg-[#343536] px-7 py-4 text-xs font-bold uppercase tracking-widest"
+                    >
+                        Request a consultation <ArrowRight />
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
+}
