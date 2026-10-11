@@ -13,9 +13,9 @@ export function Header() {
                 {/* Logo */}
                 <Link to="/" aria-label="MHR home">
                     <img
-                        src="/mhr-logo-new.png"
+                        src="/mhr-dark.png"
                         alt="MHR Renovations & Contractors"
-                        className="h-16 w-auto object-contain mix-blend-multiply"
+                        className="h-20 w-auto object-contain mix-blend-multiply"
                     />
                 </Link>
 

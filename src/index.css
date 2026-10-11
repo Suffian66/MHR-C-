@@ -221,3 +221,117 @@
         @apply bg-background text-foreground;
     }
 }
+
+/* Custom styles for the hero section ....................................................................*/
+
+
+
+@keyframes heroZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.animate-hero-zoom {
+  animation: heroZoom 6s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-zoom {
+    animation: none;
+    transform: scale(1.05);
+  }
+}
+
+/* Custom styles for the service slider ....................................................................*/
+
+
+@keyframes serviceCardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.service-card-enter {
+  animation: serviceCardEnter 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card-enter {
+    animation: none;
+  }
+}
+
+
+/* Custom styles for the featured projects section ....................................................................*/
+
+@keyframes projectFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-fade-in {
+  animation: projectFadeIn 550ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-fade-in {
+    animation: none;
+  }
+}
+
+
+/* Custom styles for Transformations section ....................................................................*/
+
+.before-after-range {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: ew-resize;
+  touch-action: pan-y;
+}
+
+.before-after-range::-webkit-slider-runnable-track {
+  height: 100%;
+  background: transparent;
+}
+
+.before-after-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 4px;
+  height: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.before-after-range::-moz-range-track {
+  height: 100%;
+  background: transparent;
+}
+
+.before-after-range::-moz-range-thumb {
+  width: 4px;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}

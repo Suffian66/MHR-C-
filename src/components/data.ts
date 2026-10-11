@@ -62,27 +62,59 @@ export const services: Service[] = [
     },
 ];
 
-export const projects: Project[] = [
-    {
-        title: 'The Harbour House',
-        category: 'Full home renovation',
-        image: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
-    },
-    {
-        title: 'Oak & Stone Kitchen',
-        category: 'Kitchen renovation',
-        image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=85',
-    },
-    {
-        title: 'The Quiet Ensuite',
-        category: 'Bathroom renovation',
-        image: 'https://images.unsplash.com/photo-1551776235-dde6d482980b?auto=format&fit=crop&w=1400&q=85',
-    },
-];
+
+export const projects = [
+  {
+    title: 'The Modern Kitchen',
+    category: 'Kitchen renovation',
+    description:
+      'A thoughtful kitchen transformation combining clean lines, warm materials and practical design to create a space for everyday living.',
+    images: [
+      '/images/kitchen-1.jpg',
+      '/images/kitchen-2.jpg',
+      '/images/kitchen-3.jpg',
+      '/images/kitchen-4.jpg',
+      '/images/kitchen-5.jpg',
+      '/images/kitchen-6.jpg',
+      '/images/kitchen-7.jpg',
+    ],
+  },
+  {
+    title: 'A Calmer Bathroom',
+    category: 'Bathroom renovation',
+    description:
+      'A refined bathroom refresh with considered finishes, balanced lighting and a calm, timeless atmosphere.',
+    images: [
+      '/images/bathroom-1.jpg',
+      '/images/bathroom-2.jpg',
+      '/images/bathroom-3.jpg',
+      '/images/bathroom-4.jpg',
+      '/images/bathroom-5.jpg',
+      '/images/bathroom-6.jpg',
+      '/images/bathroom-7.jpg',
+    ],
+  },
+  {
+    title: 'Room to Reimagine',
+    category: 'Interior renovation',
+    description:
+      'A considered home transformation that makes better use of space while bringing a consistent feel to every detail.',
+    images: [
+      '/images/interior-1.jpg',
+      '/images/interior-2.jpg',
+      '/images/interior-3.jpg',
+      '/images/interior-4.jpg',
+      '/images/interior-5.jpg',
+      '/images/interior-6.jpg',
+      '/images/interior-7.jpg',
+    ],
+  },
+]
+
 
 export const navItems: NavItem[] = [
-    { label: 'About us', href: '/about-us' },
+    { label: 'About us', href: '/about' },
     { label: 'Services', href: '/#services' },
-    { label: 'Our work', href: '/our-work' },
+    { label: 'Portfolio', href: '/portfolio' },
     { label: 'Contact', href: '/contact' },
 ];

@@ -9,9 +9,9 @@ export function Footer() {
                     {/* Brand */}
                     <div>
                         <img
-                            src="/mhr-footer-logo.png"
+                            src="/mhr-light.png"
                             alt="MHR Magic Hammer Renovation & Contracting"
-                            className="h-24 w-auto object-contain"
+                            className="h-28 w-auto object-contain"
                         />
 
                         <p className="mt-5 max-w-xs text-sm leading-6 text-white/55">
