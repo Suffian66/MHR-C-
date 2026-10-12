@@ -22,14 +22,14 @@ export default function Home() {
                 <div className="mx-auto flex max-w-7xl items-center justify-between">
                     <span>Renovations built around you</span>
                     <span className="hidden sm:block">
-                        Serving Auckland &amp; surrounds
+                        Serving Oakville &amp; surrounds
                     </span>
                 </div>
             </div>
 
             <Header />
 
-            
+
             <HeroSection />
             <AboutPreview />
             <BeforeAfterSection />

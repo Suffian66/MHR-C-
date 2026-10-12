@@ -51,8 +51,8 @@ export default function HeroSection() {
                         aria-hidden={index !== activeSlide}
 
                         className={`absolute inset-0 bg-cover bg-center transition-opacity duration-[1500ms] ease-in-out ${index === activeSlide
-                                ? 'animate-hero-zoom opacity-100'
-                                : 'scale-[1.2] opacity-0'
+                            ? 'animate-hero-zoom opacity-100'
+                            : 'scale-[1.2] opacity-0'
                             }`}
 
                         style={{ backgroundImage: `url("${slide.image}")` }}
@@ -71,7 +71,7 @@ export default function HeroSection() {
             />
 
             {/* Hero content */}
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-28 sm:py-32">
+            <div className="relative z-10 mx-auto w-full max-w-7xl px-2 py-28 sm:py-28">
                 <div className="max-w-4xl">
                     <p className="mb-7 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-[#f19a53]">
                         <span className="h-px w-12 bg-[#e87928]" />

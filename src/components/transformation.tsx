@@ -1,5 +1,4 @@
-
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, MoveHorizontal } from 'lucide-react'
 
 const transformations = [
@@ -7,22 +6,22 @@ const transformations = [
     category: 'Living room',
     title: 'A fresh perspective.',
     description: 'A dated living space transformed with warm materials and considered details.',
-    before: '/images/living-room-before.jpg',
-    after: '/images/living-room-after.jpg',
+    before: 'https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&fit=crop&w=1200&q=85',
+    after: 'https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&fit=crop&w=1200&q=85',
   },
   {
     category: 'Kitchen',
     title: 'Made for everyday living.',
     description: 'A tired kitchen reimagined with a cleaner look and a more functional feel.',
-    before: '/images/kitchen-before.jpg',
-    after: '/images/kitchen-after.jpg',
+    before: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
+    after: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
   },
   {
     category: 'Bathroom',
     title: 'Every detail, renewed.',
     description: 'A refreshed bathroom with timeless finishes and a calm, modern atmosphere.',
-    before: '/images/bathroom-before.jpg',
-    after: '/images/bathroom-after.jpg',
+    before: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=85',
+    after: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=85',
   },
 ]
 
@@ -31,6 +30,15 @@ export function BeforeAfterSection() {
   const [position, setPosition] = useState(50)
 
   const project = transformations[activeIndex]
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % transformations.length)
+      setPosition(50)
+    }, 6000)
+
+    return () => window.clearInterval(interval)
+  }, [])
 
   const changeProject = (index: number) => {
     setActiveIndex(index)
@@ -46,9 +54,9 @@ export function BeforeAfterSection() {
         {/* Compact heading */}
         <div className="mb-7 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#e87928]">
+            {/* <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#e87928]">
               Before & after
-            </p>
+            </p> */}
             <h2 className="font-serif text-3xl sm:text-5xl">
               See the <em className="font-normal text-[#e87928]">difference.</em>
             </h2>
@@ -60,33 +68,47 @@ export function BeforeAfterSection() {
         </div>
 
         {/* Wide comparison image */}
+
         <div className="relative aspect-[16/9] overflow-hidden bg-[#343536] sm:aspect-[2.2/1]">
-          <img
-            src={project.before}
-            alt={`${project.category} before renovation`}
-            draggable={false}
-            className="pointer-events-none absolute inset-0 h-full w-full select-none object-cover"
-          />
+          {transformations.map((item, index) => (
+            <div
+              key={item.category}
+              className={`absolute inset-0 transition-opacity duration-[1400ms] ease-in-out ${index === activeIndex
+                ? 'z-[1] opacity-100'
+                : 'z-0 opacity-0'
+                }`}
+              aria-hidden={index !== activeIndex}
+            >
+              <img
+                src={item.before}
+                alt={`${item.category} before renovation`}
+                draggable={false}
+                className="absolute inset-0 h-full w-full select-none object-cover"
+              />
 
-          <div
-            className="pointer-events-none absolute inset-0 overflow-hidden"
-            style={{ clipPath: `inset(0 0 0 ${position}%)` }}
-          >
-            <img
-              src={project.after}
-              alt={`${project.category} after renovation`}
-              draggable={false}
-              className="absolute inset-0 h-full w-full max-w-none select-none object-cover"
-            />
-          </div>
+              <div
+                className="pointer-events-none absolute inset-0 overflow-hidden"
+                style={{
+                  clipPath: `inset(0 0 0 ${index === activeIndex ? position : 50}%)`,
+                }}
+              >
+                <img
+                  src={item.after}
+                  alt={`${item.category} after renovation`}
+                  draggable={false}
+                  className="absolute inset-0 h-full w-full select-none object-cover"
+                />
+              </div>
 
-          <span className="pointer-events-none absolute bottom-3 left-3 z-10 bg-black/50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-white sm:bottom-5 sm:left-5">
-            Before
-          </span>
+              <span className="pointer-events-none absolute bottom-3 left-3 z-10 bg-black/50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-white sm:bottom-5 sm:left-5">
+                Before
+              </span>
 
-          <span className="pointer-events-none absolute bottom-3 right-3 z-10 bg-black/50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-white sm:bottom-5 sm:right-5">
-            After
-          </span>
+              <span className="pointer-events-none absolute bottom-3 right-3 z-10 bg-black/50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-white sm:bottom-5 sm:right-5">
+                After
+              </span>
+            </div>
+          ))}
 
           <div
             className="pointer-events-none absolute inset-y-0 z-10 w-px bg-white"
@@ -107,6 +129,7 @@ export function BeforeAfterSection() {
             className="before-after-range absolute inset-0 z-20 h-full w-full"
           />
         </div>
+
 
         {/* Concise project details and controls */}
         <div className="mt-5 flex flex-col gap-5 border-b border-[#343536]/15 pb-5 sm:flex-row sm:items-center sm:justify-between">
@@ -130,11 +153,10 @@ export function BeforeAfterSection() {
                 onClick={() => changeProject(index)}
                 aria-label={`Show ${item.category} transformation`}
                 aria-pressed={activeIndex === index}
-                className={`size-2.5 rounded-full transition-all ${
-                  activeIndex === index
-                    ? 'w-7 bg-[#e87928]'
-                    : 'bg-[#343536]/25 hover:bg-[#e87928]/60'
-                }`}
+                className={`size-2.5 rounded-full transition-all ${activeIndex === index
+                  ? 'w-7 bg-[#e87928]'
+                  : 'bg-[#343536]/25 hover:bg-[#e87928]/60'
+                  }`}
               />
             ))}
 
@@ -145,7 +167,7 @@ export function BeforeAfterSection() {
               onClick={() =>
                 changeProject(
                   (activeIndex - 1 + transformations.length) %
-                    transformations.length,
+                  transformations.length,
                 )
               }
               aria-label="Previous transformation"

@@ -1,5 +1,5 @@
 
-import { projects } from '../components/data';
+import { projects } from '../data/data';
 import { Footer } from '../components/footer';
 import { Header } from '../components/header';
 

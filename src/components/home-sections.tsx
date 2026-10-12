@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Mail, MapPin, MoveUpRight, Phone, Quote, Star } from 'lucide-react';
 import { ServiceSlider } from './service-slider';
-import { projects } from './data';
+import { projects } from '../data/data';
 import { useEffect, useState } from 'react';
 
 export function ServicesSection() {
@@ -37,79 +37,46 @@ export function ServicesSection() {
 
 
 export function FeaturedProjects() {
-
     const [activeIndex, setActiveIndex] = useState(0)
-    const [isFading, setIsFading] = useState(false)
-
-    const project = projects[activeIndex]
+    const [previousIndex, setPreviousIndex] = useState<number | null>(null)
 
     useEffect(() => {
         if (projects.length < 2) return
 
-        let fadeOutTimer: number
-        let interval: number
+        const interval = window.setInterval(() => {
+            setActiveIndex((current) => {
+                setPreviousIndex(current)
+                return (current + 1) % projects.length
+            })
+        }, 7000)
 
-        const startTransition = () => {
-            setIsFading(true)
-
-            fadeOutTimer = window.setTimeout(() => {
-                setActiveIndex((current) => (current + 1) % projects.length)
-
-                window.requestAnimationFrame(() => {
-                    window.requestAnimationFrame(() => {
-                        setIsFading(false)
-                    })
-                })
-            }, 700)
-        }
-
-        interval = window.setInterval(startTransition, 7000)
-
-        return () => {
-            window.clearInterval(interval)
-            window.clearTimeout(fadeOutTimer)
-        }
+        return () => window.clearInterval(interval)
     }, [])
 
+    useEffect(() => {
+        if (previousIndex === null) return
+
+        const timeout = window.setTimeout(() => {
+            setPreviousIndex(null)
+        }, 1400)
+
+        return () => window.clearTimeout(timeout)
+    }, [activeIndex, previousIndex])
+
     const changeProject = (index: number) => {
-        if (index === activeIndex || isFading) return
+        if (index === activeIndex) return
 
-        setIsFading(true)
-
-        window.setTimeout(() => {
-            setActiveIndex(index)
-
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    setIsFading(false)
-                })
-            })
-        }, 700)
+        setPreviousIndex(activeIndex)
+        setActiveIndex(index)
     }
 
-
+    const project = projects[activeIndex]
 
     return (
         <section
             id="projects"
             className="relative overflow-hidden bg-[#e87928] px-5 py-20 text-[#343536] sm:px-8 sm:py-28"
         >
-            {/* Background image */}
-            {/* <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center"
-                style={{
-                    backgroundImage:
-                        "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=85')",
-                }}
-            />
-
-            {/* Orange overlay to soften the image */}
-            {/* <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 bg-[#e87928]/97" */}
-            {/* />  */}
-
             {/* Decorative background details */}
             <div
                 aria-hidden="true"
@@ -149,10 +116,7 @@ export function FeaturedProjects() {
                 </div>
 
                 <div
-                    className={`grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14 transition-all duration-700 ease-in-out ${isFading
-                        ? 'translate-y-1 opacity-0'
-                        : 'translate-y-0 opacity-100'
-                        }`}
+                    className={`grid gap-9 lg:grid-cols-[0.72fr_1.28fr] lg:items-center lg:gap-14 transition-all duration-700 ease-in-out`}
                 >
 
                     {/* Project information */}
@@ -232,7 +196,7 @@ export function FeaturedProjects() {
                     </div>
 
                     {/* Artistic 7-image gallery */}
-                    <div className="grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px]">
+                    {/* <div className="grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px]">
                         {project.images.slice(0, 7).map((image, index) => {
                             const positions = [
                                 'col-span-4 row-span-2',
@@ -266,7 +230,64 @@ export function FeaturedProjects() {
                                 </div>
                             )
                         })}
+                    </div> */}
+
+                    {/* Artistic gallery with smooth crossfade */}
+                    <div className="relative grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 overflow-hidden sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px]">
+                        {[previousIndex, activeIndex]
+                            .filter((index): index is number => index !== null)
+                            .filter((index, position, indexes) => indexes.indexOf(index) === position)
+                            .map((index) => {
+                                const item = projects[index]
+                                const isActive = index === activeIndex
+
+                                const positions = [
+                                    'col-span-4 row-span-2',
+                                    'col-span-2 row-span-1',
+                                    'col-span-2 row-span-1',
+                                    'col-span-2 row-span-1',
+                                    'col-span-2 row-span-1',
+                                    'col-span-1 row-span-1',
+                                    'col-span-1 row-span-1',
+                                ]
+
+                                return (
+                                    <div
+                                        key={item.title}
+                                        className={`col-span-6 row-span-full grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 transition-opacity duration-[1400ms] ease-in-out sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px] ${isActive
+                                            ? 'relative z-10 opacity-100'
+                                            : 'pointer-events-none absolute inset-0 z-0 opacity-0'
+                                            }`}
+                                        aria-hidden={!isActive}
+                                    >
+                                        {item.images.slice(0, 7).map((image, imageIndex) => (
+                                            <div
+                                                key={`${item.title}-${imageIndex}`}
+                                                className={`group relative min-h-0 overflow-hidden bg-[#343536]/10 ${positions[imageIndex]}`}
+                                            >
+                                                <img
+                                                    src={image}
+                                                    alt={`${item.title} — gallery image ${imageIndex + 1}`}
+                                                    loading="eager"
+                                                    className={`h-full w-full object-cover transition-transform duration-700 ease-out ${isActive ? 'group-hover:scale-105' : ''
+                                                        }`}
+                                                />
+
+                                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-60" />
+
+                                                {imageIndex === 0 && (
+                                                    <span className="absolute bottom-3 left-3 bg-[#eeeae1] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] sm:bottom-5 sm:left-5 sm:text-[10px]">
+                                                        Featured project
+                                                    </span>
+                                                )}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )
+                            })}
                     </div>
+
+
                 </div>
 
                 {/* Bottom statement */}
@@ -287,7 +308,7 @@ export function FeaturedProjects() {
                     </Link>
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 
@@ -410,75 +431,61 @@ export function AboutPreview() {
 
 export default AboutPreview
 
-const testimonials = [
-    'The whole process felt calm and considered. We love how our home works now.',
-    'MHR brought ideas we had not thought of and delivered every detail beautifully.',
-    'Clear communication, excellent workmanship, and a team we would recommend to anyone.',
-];
-
-const names = ['Sarah & James', 'Mia Thompson', 'The Wilson family'];
-
-
 
 export function Testimonials() {
-    return (
-        <section className="relative overflow-hidden bg-[#f7f6f2] px-6 py-24 text-[#343536] sm:py-32">
-            {/* Decorative background */}
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-32 top-0 size-96 rounded-full border border-[#e87928]/10"
-            />
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-12 top-20 size-56 rounded-full border border-[#343536]/[0.06]"
-            />
+    const testimonials = [
+        'The whole process felt calm and considered. We love how our home works now.',
+        'MHR brought ideas we had not thought of and delivered every detail beautifully.',
+        'Clear communication, excellent workmanship, and a team we would recommend to anyone.',
+    ];
 
-            <div className="relative mx-auto max-w-7xl">
-                {/* Heading */}
-                <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+    const names = ['Sarah & James', 'Mia Thompson', 'The Wilson family'];
+
+    return (
+        <section className="bg-[#f7f6f2] px-5 py-16 text-[#343536] sm:px-8 sm:py-20">
+            <div className="mx-auto max-w-7xl">
+                <div className="mb-9 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                     <div>
-                        <p className="mb-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.28em] text-[#e87928]">
-                            <span className="h-px w-10 bg-[#e87928]" />
-                            Words that matter
+                        <p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#e87928]">
+                            <span className="h-px w-6 bg-[#e87928]" />
+                            Client experiences
                         </p>
 
-                        <h2 className="max-w-3xl font-serif text-4xl leading-[1.1] sm:text-6xl">
-                            Good work speaks.
-                            <br />
-                            <em className="font-normal text-[#e87928]">
-                                Our clients do too.
-                            </em>
+                        <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
+                            Trusted by homeowners.
+                            <span className="text-[#e87928]"> Proven by our work.</span>
                         </h2>
                     </div>
 
-                    <div className="max-w-sm lg:pb-2">
-                        <p className="text-sm leading-7 text-[#343536]/65 sm:text-base">
-                            A renovation is personal. It is about trust, communication,
-                            and creating a space that feels right. Here is what our
-                            clients have to say about their experience.
-                        </p>
-                    </div>
+                    <p className="max-w-sm text-sm leading-6 text-[#343536]/60">
+                        Great renovations start with trust. Here's what our
+                        clients say about working with MHR.
+                    </p>
                 </div>
 
-                {/* Testimonials layout */}
-                <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
-                    {/* Featured testimonial */}
-                    {testimonials.length > 0 && (
-                        <article className="group relative flex min-h-[390px] flex-col justify-between overflow-hidden bg-[#343536] p-8 text-white sm:min-h-[440px] sm:p-12">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    {testimonials.map((quote, index) => (
+                        <article
+                            key={names[index]}
+                            className={`group relative flex min-h-[245px] flex-col justify-between overflow-hidden rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg sm:p-7 ${index === 0
+                                ? 'border-[#343536] bg-[#343536] text-white'
+                                : 'border-[#343536]/10 bg-white text-[#343536] hover:border-[#e87928]/40'
+                                }`}
+                        >
                             <div
-                                aria-hidden="true"
-                                className="pointer-events-none absolute -right-8 -top-12 font-serif text-[280px] leading-none text-white/[0.035]"
-                            >
-                                ”
-                            </div>
+                                className={`absolute left-0 top-0 h-1 w-12 transition-all duration-300 group-hover:w-20 ${index === 0
+                                    ? 'bg-[#f19a53]'
+                                    : 'bg-[#e87928]'
+                                    }`}
+                            />
 
-                            <div className="relative">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex gap-1 text-[#f19a53]">
+                            <div>
+                                <div className="mb-5 flex items-center justify-between">
+                                    <div className="flex gap-1 text-[#e87928]">
                                         {[1, 2, 3, 4, 5].map((star) => (
                                             <Star
                                                 key={star}
-                                                size={15}
+                                                size={14}
                                                 fill="currentColor"
                                                 strokeWidth={1.5}
                                             />
@@ -486,102 +493,78 @@ export function Testimonials() {
                                     </div>
 
                                     <Quote
-                                        size={34}
-                                        strokeWidth={1.2}
-                                        className="text-[#f19a53]"
+                                        size={23}
+                                        strokeWidth={1.5}
+                                        className={
+                                            index === 0
+                                                ? 'text-[#f19a53]'
+                                                : 'text-[#e87928]/50'
+                                        }
                                     />
                                 </div>
 
-                                <p className="mt-10 max-w-2xl font-serif text-2xl leading-snug sm:text-3xl lg:text-4xl">
-                                    “{testimonials[0]}”
+                                <p className="text-[15px] leading-7">
+                                    “{quote}”
                                 </p>
                             </div>
 
-                            <div className="relative mt-12 flex items-end justify-between gap-4 border-t border-white/15 pt-6">
-                                <div>
-                                    <p className="font-medium text-white">
-                                        {names[0]}
-                                    </p>
-                                    <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white/45">
-                                        MHR Client
-                                    </p>
-                                </div>
+                            <div
+                                className={`mt-7 flex items-center justify-between border-t pt-4 ${index === 0
+                                    ? 'border-white/15'
+                                    : 'border-[#343536]/10'
+                                    }`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div
+                                        className={`flex size-9 items-center justify-center rounded-full text-sm font-semibold ${index === 0
+                                            ? 'bg-[#e87928] text-white'
+                                            : 'bg-[#e87928]/10 text-[#e87928]'
+                                            }`}
+                                    >
+                                        {names[index].charAt(0)}
+                                    </div>
 
-                                <div className="flex size-11 items-center justify-center rounded-full border border-white/20 text-[#f19a53] transition-all duration-300 group-hover:border-[#f19a53] group-hover:bg-[#f19a53] group-hover:text-[#343536]">
-                                    <ArrowUpRight size={19} />
-                                </div>
-                            </div>
-                        </article>
-                    )}
-
-                    {/* Remaining testimonials */}
-                    <div className="flex flex-col gap-5">
-                        {testimonials.slice(1, 3).map((quote, index) => {
-                            const actualIndex = index + 1
-
-                            return (
-                                <article
-                                    key={`${names[actualIndex]}-${actualIndex}`}
-                                    className="group flex flex-1 flex-col justify-between border border-[#343536]/10 bg-white p-7 transition-all duration-500 hover:-translate-y-1 hover:border-[#e87928]/40 hover:shadow-[0_18px_45px_rgba(52,53,54,0.06)] sm:p-9"
-                                >
                                     <div>
-                                        <div className="mb-6 flex items-center justify-between">
-                                            <div className="flex gap-1 text-[#e87928]">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <Star
-                                                        key={star}
-                                                        size={13}
-                                                        fill="currentColor"
-                                                        strokeWidth={1.5}
-                                                    />
-                                                ))}
-                                            </div>
+                                        <p className="text-sm font-semibold">
+                                            {names[index]}
+                                        </p>
 
-                                            <span className="font-serif text-4xl leading-none text-[#e87928]/30">
-                                                “
-                                            </span>
-                                        </div>
-
-                                        <p className="font-serif text-xl leading-relaxed sm:text-2xl">
-                                            “{quote}”
+                                        <p
+                                            className={`mt-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ${index === 0
+                                                ? 'text-white/45'
+                                                : 'text-[#343536]/45'
+                                                }`}
+                                        >
+                                            MHR Client
                                         </p>
                                     </div>
+                                </div>
 
-                                    <div className="mt-8 flex items-center gap-4 border-t border-[#343536]/10 pt-5">
-                                        <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#e87928]/10 font-serif text-lg text-[#e87928]">
-                                            {names[actualIndex]?.charAt(0) ?? 'C'}
-                                        </div>
-
-                                        <div>
-                                            <p className="text-sm font-semibold">
-                                                {names[actualIndex]}
-                                            </p>
-                                            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.17em] text-[#343536]/45">
-                                                MHR Client
-                                            </p>
-                                        </div>
-                                    </div>
-                                </article>
-                            )
-                        })}
-                    </div>
+                                <ArrowUpRight
+                                    size={17}
+                                    className={`transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 ${index === 0
+                                        ? 'text-[#f19a53]'
+                                        : 'text-[#343536]/35 group-hover:text-[#e87928]'
+                                        }`}
+                                />
+                            </div>
+                        </article>
+                    ))}
                 </div>
 
-                {/* Closing statement */}
-                <div className="mt-10 flex flex-col gap-3 border-t border-[#343536]/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-                    <p className="font-serif text-xl sm:text-2xl">
-                        Your home. Your vision. Our commitment.
+                <div className="mt-6 flex flex-col gap-2 border-t border-[#343536]/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm font-medium">
+                        Your vision. Our craftsmanship.
                     </p>
 
-                    <p className="text-xs font-medium tracking-wide text-[#343536]/55">
-                        Every project deserves the same care.
+                    <p className="text-xs text-[#343536]/50">
+                        Every detail matters. Every client matters.
                     </p>
                 </div>
             </div>
         </section>
-    )
+    );
 }
-
 export function ContactCta() {
     return (
         <section className="relative isolate overflow-hidden bg-[#e87928] px-6 py-24 text-white sm:py-32">
@@ -619,22 +602,20 @@ export function ContactCta() {
                 </div>
 
                 <div className="space-y-5 text-sm">
-                    <a
-                        href="tel:+6495550123"
+                    <p
                         className="flex items-center gap-4 border-b border-white/30 pb-5"
                     >
-                        <Phone /> +64 9 555 0123
-                    </a>
+                        <Phone /> (289) 855-5559
+                    </p>
 
-                    <a
-                        href="mailto:hello@mhrrenovations.co.nz"
+                    <p
                         className="flex items-center gap-4 border-b border-white/30 pb-5"
                     >
-                        <Mail /> hello@mhrrenovations.co.nz
-                    </a>
+                        <Mail /> magichammerrenovations@gmail.com
+                    </p>
 
                     <p className="flex items-center gap-4">
-                        <MapPin /> Auckland, New Zealand
+                        <MapPin /> Oakville, ON
                     </p>
 
                     <Link

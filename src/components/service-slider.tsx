@@ -6,7 +6,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
-import { services } from './data'
+import { services } from '../data/data'
 
 export function ServiceSlider() {
   const [active, setActive] = useState(0)
@@ -38,9 +38,8 @@ export function ServiceSlider() {
         {visibleServices.map((service, index) => (
           <article
             key={service.slug}
-            className={`service-card-enter group relative isolate h-[390px] overflow-hidden rounded-sm bg-[#252627] sm:h-[430px] ${
-              index === 1 ? 'hidden sm:block' : ''
-            } ${index === 2 ? 'hidden lg:block' : ''}`}
+            className={`service-card-enter group relative isolate h-[390px] overflow-hidden rounded-sm bg-[#252627] sm:h-[430px] ${index === 1 ? 'hidden sm:block' : ''
+              } ${index === 2 ? 'hidden lg:block' : ''}`}
             style={{ animationDelay: `${index * 100}ms` }}
           >
             {/* Background image */}
@@ -118,11 +117,10 @@ export function ServiceSlider() {
               aria-label={`Show service ${index + 1}: ${service.title}`}
               aria-pressed={index === active}
               onClick={() => setActive(index)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${
-                index === active
+              className={`h-1.5 rounded-full transition-all duration-500 ${index === active
                   ? 'w-9 bg-[#e87928]'
                   : 'w-2 bg-white/30 hover:bg-white/70'
-              }`}
+                }`}
             />
           ))}
         </div>
