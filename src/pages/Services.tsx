@@ -25,211 +25,104 @@ export default function ServicePage() {
 
     return (
         <main className="min-h-screen overflow-hidden bg-[#f7f6f2] text-[#343536]">
+            {/* Top announcement bar */}
+            <div className="bg-[#343536] px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/80">
+                <div className="mx-auto flex max-w-7xl items-center justify-between">
+                    <span>Renovations built around you</span>
+                    <span className="hidden sm:block">
+                        Serving Oakville &amp; surrounds
+                    </span>
+                </div>
+            </div>
             <Header />
 
-
-
             {/* Service Hero — Dark Gradient + Editorial Collage */}
-            <section className="relative isolate overflow-hidden bg-[#171717] text-white">
-                {/* Left-side black gradient and subtle brand glow */}
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r from-black via-[#171717] via-55% to-[#343536]"
-                />
 
-                <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute -left-32 top-1/4 -z-10 h-96 w-96 rounded-full bg-[#e87928]/10 blur-[120px]"
-                />
+            <section className="relative overflow-hidden bg-[#171717] text-white">
+                <div className="grid min-h-[680px] lg:grid-cols-[0.8fr_1.2fr]">
 
-                <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 sm:px-10 sm:py-20 lg:min-h-[680px] lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 lg:px-12 lg:py-24">
+                    {/* LEFT — Text panel */}
+                    <div className="relative z-10 flex flex-col justify-center bg-gradient-to-br from-[#111111] via-[#202020] to-[#343536] px-6 py-16 sm:px-10 lg:px-14 xl:px-20">
+                        {/* Subtle orange accent */}
+                        <div className="absolute left-0 top-24 h-24 w-1 bg-[#e87928]" />
 
-                    {/* LEFT — Service Content */}
-                    <div className="relative z-10 max-w-xl">
-                        {/* Breadcrumb */}
-                        <nav
-                            aria-label="Breadcrumb"
-                            className="mb-10 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.14em] text-white/50"
-                        >
-                            <Link to="/" className="transition-colors hover:text-[#f19a53]">
+                        <nav className="mb-10 flex flex-wrap items-center gap-2 text-sm text-white/55">
+                            <Link to="/" className="transition hover:text-[#f19a53]">
                                 Home
                             </Link>
-
                             <span>/</span>
-
-                            <Link
-                                to="/services"
-                                className="transition-colors hover:text-[#f19a53]"
-                            >
+                            <Link to="/services" className="transition hover:text-[#f19a53]">
                                 Services
                             </Link>
-
                             <span>/</span>
-
-                            <span className="text-[#f19a53]">
-                                {service.title}
-                            </span>
+                            <span className="text-[#f19a53]">{service.title}</span>
                         </nav>
 
-                        {/* Eyebrow */}
-                        <div className="mb-6 flex items-center gap-3">
-                            <span className="h-px w-10 bg-[#e87928]" />
+                        <p className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#f19a53]">
+                            {details.eyebrow}
+                        </p>
 
-                            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f19a53]">
-                                {details.eyebrow}
-                            </span>
-                        </div>
-
-                        {/* Dynamic Heading */}
-                        <h1 className="max-w-xl font-serif text-5xl font-medium leading-[1.08] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                        <h1 className="max-w-xl font-serif text-4xl leading-[1.12] tracking-tight sm:text-5xl xl:text-6xl">
                             {details.headline}{" "}
                             <span className="text-[#f19a53]">
                                 {details.highlight}
                             </span>
                         </h1>
 
-                        {/* Description */}
-                        <p className="mt-7 max-w-lg text-base leading-8 text-white/65 sm:text-lg">
+                        <p className="mt-7 max-w-lg text-base leading-8 text-white/70 sm:text-lg">
                             {details.description}
                         </p>
 
-                        {/* CTA */}
-                        <div className="mt-9 flex flex-wrap items-center gap-5">
+                        <div className="mt-9">
                             <Link
                                 to="/contact"
-                                className="group inline-flex items-center gap-4 bg-[#e87928] px-6 py-4 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-[#343536]"
+                                className="inline-flex items-center gap-3 bg-[#e87928] px-7 py-4 text-sm font-semibold text-white transition hover:bg-[#f19a53]"
                             >
                                 Discuss Your Project
-
-                                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                                    ↗
-                                </span>
+                                <span aria-hidden="true">↗</span>
                             </Link>
-
-                            <span className="text-sm text-white/50">
-                                Thoughtful work. Lasting results.
-                            </span>
                         </div>
 
-                        {/* Service Number */}
-                        <div className="mt-12 flex items-center gap-4 border-t border-white/10 pt-6">
-                            <span className="font-serif text-3xl text-[#f19a53]">
-                                {service.number}
-                            </span>
-
-                            <span className="max-w-[200px] text-xs uppercase leading-5 tracking-[0.15em] text-white/45">
-                                Renovation with purpose and attention to detail
+                        <div className="mt-12 border-t border-white/10 pt-5">
+                            <span className="text-xs uppercase tracking-[0.2em] text-white/40">
+                                MHR Renovations & Contractors
                             </span>
                         </div>
                     </div>
 
-                    {/* RIGHT — Staggered Image Collage */}
-                    {/* <div className="relative mx-auto w-full max-w-2xl lg:ml-auto">
-                        <div
-                            aria-hidden="true"
-                            className="absolute -right-3 -top-5 h-28 w-28 rounded-full border border-[#e87928]/40 sm:-right-5 sm:-top-7"
-                        />
 
-                        <div className="relative grid grid-cols-2 items-center gap-3 sm:gap-5">
+                    {/* RIGHT — Five-image collage */}
+                    <div className="relative h-[380px] bg-[#202020] p-2.5 sm:h-[440px] sm:p-3 lg:h-[680px] lg:p-3.5">
+                        <div className="grid h-full grid-cols-6 grid-rows-4 gap-2 sm:gap-2.5">
 
-                            <div className="mt-8 overflow-hidden rounded-tl-[5rem] rounded-br-2xl rounded-tr-2xl rounded-bl-2xl">
-                                <img
-                                    src={details.gallery[0].image}
-                                    alt={details.gallery[0].caption}
-                                    className="h-64 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-80 lg:h-[390px]"
-                                />
-                            </div>
-
-                            <div className="flex flex-col gap-3 sm:gap-5">
-
-                                <div className="overflow-hidden rounded-2xl rounded-tr-[4rem]">
-                                    <img
-                                        src={details.gallery[1].image}
-                                        alt={details.gallery[1].caption}
-                                        className="h-36 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-48"
-                                    />
-                                </div>
-
-                                <div className="overflow-hidden rounded-2xl rounded-bl-[4rem]">
-                                    <img
-                                        src={details.gallery[2].image}
-                                        alt={details.gallery[2].caption}
-                                        className="h-40 w-full object-cover transition-transform duration-700 hover:scale-105 sm:h-56"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="absolute bottom-5 left-0 max-w-[205px] rounded-xl border border-white/10 bg-[#252525]/95 p-4 shadow-2xl backdrop-blur-md sm:bottom-7 sm:-left-5">
-                            <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#f19a53]">
-                                The MHR approach
-                            </span>
-
-                            <p className="font-serif text-lg leading-snug text-white">
-                                Every detail has a purpose.
-                            </p>
-                        </div>
-
-                        <div
-                            aria-hidden="true"
-                            className="absolute -bottom-6 -right-3 -z-10 h-28 w-28 rounded-full bg-[#e87928]/15 blur-3xl"
-                        />
-                    </div> */}
-
-                    {/* RIGHT — Seven-Image Editorial Collage */}
-                    <div className="relative mx-auto w-full max-w-2xl lg:ml-auto">
-                        {/* Subtle orange frame */}
-                        <div
-                            aria-hidden="true"
-                            className="absolute -right-3 -top-4 h-24 w-24 rounded-full border border-[#e87928]/30 sm:-right-4 sm:-top-5"
-                        />
-
-                        <div className="relative grid grid-cols-3 grid-rows-[115px_100px_115px] gap-2.5 sm:grid-rows-[155px_130px_155px] sm:gap-3.5 lg:grid-rows-[175px_145px_175px]">
-
-                            {heroImages.map((item, index) => {
-                                const tileClasses = [
-                                    "col-span-1 row-span-2 rounded-tl-[3.5rem]",
-                                    "col-span-1 row-span-1 rounded-tr-[2rem]",
-                                    "col-span-1 row-span-1 rounded-tr-md",
-                                    "col-span-1 row-span-1 rounded-bl-[2rem]",
-                                    "col-span-1 row-span-1 rounded-br-[2rem]",
-                                    "col-span-2 row-span-1 rounded-bl-[2.5rem]",
-                                    "col-span-1 row-span-1 rounded-br-[2.5rem]",
+                            {details.heroImages.slice(0, 5).map((item, index) => {
+                                const layouts = [
+                                    "col-span-2 row-span-2",
+                                    "col-span-2 row-span-2",
+                                    "col-span-2 row-span-2",
+                                    "col-span-3 row-span-2",
+                                    "col-span-3 row-span-2",
                                 ];
 
                                 return (
                                     <div
                                         key={`${item.image}-${index}`}
-                                        className={`group relative min-h-0 overflow-hidden bg-[#292929] ${tileClasses[index]}`}
+                                        className={`group relative min-h-0 min-w-0 overflow-hidden rounded-sm ${layouts[index]}`}
                                     >
                                         <img
                                             src={item.image}
-                                            alt={item.caption || `${service.title} inspiration`}
-                                            loading={index > 2 ? "lazy" : "eager"}
-                                            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                                            alt={item.caption || `${service.title} project`}
+                                            loading={index < 3 ? "eager" : "lazy"}
+                                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
-
-                                        {/* Gentle image shading */}
-                                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
                                     </div>
                                 );
                             })}
-                        </div>
 
-                        {/* Floating label */}
-                        <div className="absolute -bottom-5 left-3 max-w-[205px] rounded-xl border border-white/10 bg-[#252525]/95 p-4 shadow-xl backdrop-blur-md sm:-left-5">
-                            <span className="mb-2 block text-[10px] font-semibold uppercase tracking-[0.18em] text-[#f19a53]">
-                                The MHR approach
-                            </span>
-
-                            <p className="font-serif text-lg leading-snug text-white">
-                                Every detail has a purpose.
-                            </p>
                         </div>
                     </div>
                 </div>
             </section>
-
 
 
             {/* Editorial introduction */}

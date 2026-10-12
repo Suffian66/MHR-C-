@@ -61,31 +61,31 @@ export const serviceDetails = {
     ctaTitle: 'Your kitchen transformation starts here.',
     heroImages: [
       {
-        image: "/images/services/kitchen/kitchen-1.jpg",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
         caption: "Modern kitchen renovation",
       },
       {
-        image: "/images/services/kitchen/kitchen-2.jpg",
+        image: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf",
         caption: "Custom kitchen cabinetry",
       },
       {
-        image: "/images/services/kitchen/kitchen-3.jpg",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
         caption: "Premium kitchen finishes",
       },
       {
-        image: "/images/services/kitchen/kitchen-4.jpg",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
         caption: "Kitchen island design",
       },
       {
-        image: "/images/services/kitchen/kitchen-5.jpg",
+        image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14",
         caption: "Contemporary kitchen interiors",
       },
       {
-        image: "/images/services/kitchen/kitchen-6.jpg",
+        image: "https://images.unsplash.com/photo-1620626011761-996317b8d101",
         caption: "Kitchen renovation details",
       },
       {
-        image: "/images/services/kitchen/kitchen-7.jpg",
+        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea",
         caption: "Completed kitchen project",
       },
     ],
