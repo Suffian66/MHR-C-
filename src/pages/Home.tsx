@@ -28,8 +28,6 @@ export default function Home() {
             </div>
 
             <Header />
-
-
             <HeroSection />
             <AboutPreview />
             <BeforeAfterSection />
@@ -38,7 +36,6 @@ export default function Home() {
             <FeaturedProjects />
             <Testimonials />
             <ContactCta />
-
             <Footer />
         </main>
     )

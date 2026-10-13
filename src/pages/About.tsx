@@ -97,7 +97,7 @@ export default function AboutUs() {
 
                         <div className="relative aspect-[4/4.5] overflow-hidden">
                             <img
-                                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85"
+                                src="/images/project-rsc/sitting-area.png"
                                 alt="Bright renovated interior with warm materials and natural light"
                                 loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"

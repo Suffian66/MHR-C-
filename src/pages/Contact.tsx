@@ -14,6 +14,15 @@ export default function Contact() {
 
     return (
         <main className="bg-[#f7f6f2] text-[#343536]">
+            {/* Top announcement bar */}
+            <div className="bg-[#343536] px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/80">
+                <div className="mx-auto flex max-w-7xl items-center justify-between">
+                    <span>Renovations built around you</span>
+                    <span className="hidden sm:block">
+                        Serving Oakville &amp; surrounds
+                    </span>
+                </div>
+            </div>
             <Header />
 
             {/* Shared hero component */}

@@ -32,7 +32,7 @@ export const serviceDetails = {
       'The materials, textures, and finishes that give a kitchen its character.',
     gallery: [
       {
-        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85',
+        image: '/images/project-rsc/kitchen.png',
         caption: 'Spaces that welcome',
       },
       {
@@ -40,7 +40,7 @@ export const serviceDetails = {
         caption: 'Considered finishes',
       },
       {
-        image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85',
+        image: '/images/project-rsc/kitchen2.jpeg',
         caption: 'A cohesive interior',
       },
     ],
@@ -61,32 +61,24 @@ export const serviceDetails = {
     ctaTitle: 'Your kitchen transformation starts here.',
     heroImages: [
       {
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+        image: "/images/project-aa/kitchen.jpg",
         caption: "Modern kitchen renovation",
       },
       {
-        image: "https://images.unsplash.com/photo-1556912167-f556f1f39fdf",
+        image: "/images/kitchen.png",
         caption: "Custom kitchen cabinetry",
       },
       {
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c",
+        image: "/images/project-rsc/kitchen.png",
         caption: "Premium kitchen finishes",
       },
       {
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+        image: "/images/project-rsc/kitchen4.JPEG",
         caption: "Kitchen island design",
       },
       {
-        image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14",
+        image: "/images/project-rsc/kitchen3.jpeg",
         caption: "Contemporary kitchen interiors",
-      },
-      {
-        image: "https://images.unsplash.com/photo-1620626011761-996317b8d101",
-        caption: "Kitchen renovation details",
-      },
-      {
-        image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea",
-        caption: "Completed kitchen project",
       },
     ],
   },
@@ -124,15 +116,15 @@ export const serviceDetails = {
       'Explore the textures, finishes, and details that shape a more considered bathroom.',
     gallery: [
       {
-        image: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=85',
+        image: '/images/project-rsc/bathroom6.png',
         caption: 'A calmer atmosphere',
       },
       {
-        image: 'https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&fit=crop&w=1200&q=85',
+        image: '/images/project-rsc/bathroom7.png',
         caption: 'Refined materials',
       },
       {
-        image: 'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=85',
+        image: '/images/project-rsc/bathroom2.jpeg',
         caption: 'Thoughtful details',
       },
     ],
@@ -153,33 +145,26 @@ export const serviceDetails = {
     ctaTitle: 'Ready for a more considered bathroom?',
     heroImages: [
       {
-        image: "/images/services/kitchen/kitchen-1.jpg",
+        image: "/images/project-rsc/bathroom1.jpeg",
         caption: "Modern kitchen renovation",
       },
       {
-        image: "/images/services/kitchen/kitchen-2.jpg",
+        image: "/images/bathroom-1/4.jpg",
         caption: "Custom kitchen cabinetry",
       },
       {
-        image: "/images/services/kitchen/kitchen-3.jpg",
+        image: "/images/bathroom-1/5.jpg",
         caption: "Premium kitchen finishes",
       },
       {
-        image: "/images/services/kitchen/kitchen-4.jpg",
+        image: "/images/bathroom-1/2.jpg",
         caption: "Kitchen island design",
       },
       {
-        image: "/images/services/kitchen/kitchen-5.jpg",
+        image: "/images/project-rsc/bathroom5.jpeg",
         caption: "Contemporary kitchen interiors",
       },
-      {
-        image: "/images/services/kitchen/kitchen-6.jpg",
-        caption: "Kitchen renovation details",
-      },
-      {
-        image: "/images/services/kitchen/kitchen-7.jpg",
-        caption: "Completed kitchen project",
-      },
+
     ],
   },
 

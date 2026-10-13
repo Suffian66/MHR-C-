@@ -22,14 +22,15 @@ export function PageHero({
                 className="absolute inset-0 h-full w-full object-cover object-center"
             />
 
-            {/* Dark overlay: covers the entire image, strongest on the left */}
+            {/* Refined overlays — dark left, bright right */}
             <div
+                className="absolute inset-0 bg-gradient-to-r from-[#171819]/95 via-[#171819]/65 to-transparent"
                 aria-hidden="true"
-                className="absolute inset-0"
-                style={{
-                    background:
-                        "linear-gradient(90deg, rgba(37,38,39,0.98) 0%, rgba(37,38,39,0.94) 35%, rgba(37,38,39,0.78) 55%, rgba(37,38,39,0.20) 100%)",
-                }}
+            />
+
+            <div
+                className="absolute inset-0 bg-gradient-to-t from-[#171819]/-25 via-transparent to-transparent"
+                aria-hidden="true"
             />
 
             {/* Subtle architectural grid */}

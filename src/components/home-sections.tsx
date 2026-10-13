@@ -58,7 +58,7 @@ export function FeaturedProjects() {
 
         const timeout = window.setTimeout(() => {
             setPreviousIndex(null)
-        }, 1400)
+        }, 1600)
 
         return () => window.clearTimeout(timeout)
     }, [activeIndex, previousIndex])
@@ -195,97 +195,53 @@ export function FeaturedProjects() {
                         </div>
                     </div>
 
-                    {/* Artistic 7-image gallery */}
-                    {/* <div className="grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px]">
-                        {project.images.slice(0, 7).map((image, index) => {
-                            const positions = [
-                                'col-span-4 row-span-2',
-                                'col-span-2 row-span-1',
-                                'col-span-2 row-span-1',
-                                'col-span-2 row-span-1',
-                                'col-span-2 row-span-1',
-                                'col-span-1 row-span-1',
-                                'col-span-1 row-span-1',
-                            ]
-
-                            return (
-                                <div
-                                    key={`${project.title}-${index}`}
-                                    className={`group relative min-h-0 overflow-hidden bg-[#343536]/10 ${positions[index]}`}
-                                >
-                                    <img
-                                        src={image}
-                                        alt={`${project.title} — gallery image ${index + 1}`}
-                                        loading={index === 0 ? 'eager' : 'lazy'}
-                                        className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                                    />
-
-                                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-60 transition-opacity group-hover:opacity-100" />
-
-                                    {index === 0 && (
-                                        <span className="absolute bottom-3 left-3 bg-[#eeeae1] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] sm:bottom-5 sm:left-5 sm:text-[10px]">
-                                            Featured project
-                                        </span>
-                                    )}
-                                </div>
-                            )
-                        })}
-                    </div> */}
-
                     {/* Artistic gallery with smooth crossfade */}
-                    <div className="relative grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 overflow-hidden sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px]">
+                    <div className="relative h-[490px] sm:h-[620px] lg:h-[590px]">
                         {[previousIndex, activeIndex]
                             .filter((index): index is number => index !== null)
                             .filter((index, position, indexes) => indexes.indexOf(index) === position)
                             .map((index) => {
-                                const item = projects[index]
-                                const isActive = index === activeIndex
+                                const item = projects[index];
+                                const isActive = index === activeIndex;
 
                                 const positions = [
-                                    'col-span-4 row-span-2',
-                                    'col-span-2 row-span-1',
-                                    'col-span-2 row-span-1',
-                                    'col-span-2 row-span-1',
-                                    'col-span-2 row-span-1',
-                                    'col-span-1 row-span-1',
-                                    'col-span-1 row-span-1',
-                                ]
+                                    "col-start-1 row-start-3 row-span-6", // Left: image 1
+                                    "col-start-1 row-start-9 row-span-6", // Left: image 2
+                                    "col-start-2 row-start-1 row-span-4", // Right: image 1
+                                    "col-start-2 row-start-5 row-span-4", // Right: image 2
+                                    "col-start-2 row-start-9 row-span-4", // Right: image 3
+                                ];
 
                                 return (
                                     <div
                                         key={item.title}
-                                        className={`col-span-6 row-span-full grid grid-cols-6 grid-rows-[115px_100px_100px] gap-2 transition-opacity duration-[1400ms] ease-in-out sm:grid-rows-[190px_145px_145px] sm:gap-3 lg:grid-rows-[180px_145px_145px] ${isActive
-                                            ? 'relative z-10 opacity-100'
-                                            : 'pointer-events-none absolute inset-0 z-0 opacity-0'
-                                            }`}
                                         aria-hidden={!isActive}
+                                        className={`absolute inset-0 grid grid-cols-2 grid-rows-12 gap-x-3 gap-y-3 sm:gap-x-5 sm:gap-y-4 ${isActive
+                                            ? `z-10 ${previousIndex !== null ? "project-gallery-enter" : ""}`
+                                            : "pointer-events-none z-0 project-gallery-exit"
+                                            }`}
                                     >
-                                        {item.images.slice(0, 7).map((image, imageIndex) => (
-                                            <div
+                                        {item.images.slice(0, 5).map((image, imageIndex) => (
+                                            <figure
                                                 key={`${item.title}-${imageIndex}`}
-                                                className={`group relative min-h-0 overflow-hidden bg-[#343536]/10 ${positions[imageIndex]}`}
+                                                className={`group relative min-h-0 overflow-hidden border border-white/60 bg-white/20 shadow-[0_12px_28px_rgba(52,53,54,0.22)] ${positions[imageIndex]
+                                                    }`}
                                             >
                                                 <img
                                                     src={image}
-                                                    alt={`${item.title} — gallery image ${imageIndex + 1}`}
+                                                    alt={`${item.title} — project image ${imageIndex + 1}`}
                                                     loading="eager"
-                                                    className={`h-full w-full object-cover transition-transform duration-700 ease-out ${isActive ? 'group-hover:scale-105' : ''
-                                                        }`}
+                                                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
                                                 />
 
-                                                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/25 to-transparent opacity-60" />
-
-                                                {imageIndex === 0 && (
-                                                    <span className="absolute bottom-3 left-3 bg-[#eeeae1] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] sm:bottom-5 sm:left-5 sm:text-[10px]">
-                                                        Featured project
-                                                    </span>
-                                                )}
-                                            </div>
+                                                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/20" />
+                                            </figure>
                                         ))}
                                     </div>
-                                )
+                                );
                             })}
                     </div>
+
 
 
                 </div>
@@ -307,7 +263,7 @@ export function FeaturedProjects() {
                         />
                     </Link>
                 </div>
-            </div>
+            </div >
         </section >
     )
 }
@@ -378,7 +334,7 @@ export function AboutPreview() {
                         {/* Main image */}
                         <div className="absolute left-[8%] top-[5%] h-[65%] w-[78%] overflow-hidden rounded-sm shadow-xl transition-transform duration-500 hover:scale-[1.02]">
                             <img
-                                src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85"
+                                src="/images/project-aa/hall.jpg"
                                 alt="Beautifully designed modern living room"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -388,7 +344,7 @@ export function AboutPreview() {
                         {/* Overlapping kitchen image */}
                         <div className="absolute bottom-[5%] left-0 z-10 h-[38%] w-[52%] rotate-[-4deg] overflow-hidden border-[6px] border-[#eeeae1] shadow-xl transition-transform duration-500 hover:rotate-0">
                             <img
-                                src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=85"
+                                src="/images/bathroom-1/3.jpg"
                                 alt="Contemporary kitchen renovation"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -398,7 +354,7 @@ export function AboutPreview() {
                         {/* Smaller detail image */}
                         <div className="absolute bottom-[13%] right-0 z-20 h-[30%] w-[43%] rotate-[4deg] overflow-hidden border-[6px] border-[#eeeae1] shadow-xl transition-transform duration-500 hover:rotate-0">
                             <img
-                                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=85"
+                                src="/images/bathroom-1/2.jpg"
                                 alt="Refined interior finishes and furnishings"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -575,14 +531,14 @@ export function ContactCta() {
                 className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center"
                 style={{
                     backgroundImage:
-                        "url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=85')",
+                        "url('/images/comparison/before-bathroom.png')",
                 }}
             />
 
             {/* Orange overlay to soften the image */}
             <div
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 bg-[#e87928]/90"
+                className="pointer-events-none absolute inset-0 z-0 bg-[#e87928]/80"
             />
 
             <div className="relative z-10 mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_.8fr] lg:items-end">

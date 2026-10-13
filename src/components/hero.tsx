@@ -5,22 +5,22 @@ import { ArrowRight } from 'lucide-react'
 const heroSlides = [
     {
         image:
-            'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2000&q=90',
+            '/images/project-rsc/kitchen4.JPEG',
         alt: 'Elegant modern home interior',
     },
     {
         image:
-            'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=2000&q=90',
-        alt: 'Premium contemporary home design',
+            '/images/project-rsc/bathroom2.jpeg',
+        alt: 'Modern renovation of a bathroom',
     },
     {
         image:
-            'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=90',
+            '/images/project-rsc/sitting-area.jpeg',
         alt: 'Beautifully renovated living space',
     },
     {
         image:
-            'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2000&q=90',
+            '/images/project-rsc/kitchen.jpeg',
         alt: 'Sophisticated modern living room',
     },
 ]
@@ -60,15 +60,17 @@ export default function HeroSection() {
                 ))}
             </div>
 
-            {/* Dark overlays for readability */}
+            {/* Refined overlays — dark left, bright right */}
             <div
-                className="absolute inset-0 bg-gradient-to-r from-[#171819]/95 via-[#171819]/70 to-[#171819]/20"
+                className="absolute inset-0 bg-gradient-to-r from-[#171819]/95 via-[#171819]/55 to-transparent"
                 aria-hidden="true"
             />
+
             <div
-                className="absolute inset-0 bg-gradient-to-t from-[#171819]/50 via-transparent to-[#171819]/10"
+                className="absolute inset-0 bg-gradient-to-t from-[#171819]/-25 via-transparent to-transparent"
                 aria-hidden="true"
             />
+
 
             {/* Hero content */}
             <div className="relative z-10 mx-auto w-full max-w-7xl px-2 py-28 sm:py-28">
@@ -104,7 +106,7 @@ export default function HeroSection() {
                         </Link>
 
                         <Link
-                            to="/our-work"
+                            to="/portfolio"
                             className="inline-flex items-center gap-3 rounded-full border border-white/50 bg-white/5 px-7 py-4 text-sm font-bold uppercase tracking-widest text-white backdrop-blur-sm transition duration-300 hover:border-white hover:bg-white/15"
                         >
                             Explore our work

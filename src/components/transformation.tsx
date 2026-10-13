@@ -6,39 +6,41 @@ const transformations = [
     category: 'Living room',
     title: 'A fresh perspective.',
     description: 'A dated living space transformed with warm materials and considered details.',
-    before: 'https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&fit=crop&w=1200&q=85',
-    after: 'https://images.unsplash.com/photo-1556912167-f556f1f39fdf?auto=format&fit=crop&w=1200&q=85',
+    before: '/images/comparison/before-sitting.png',
+    after: '/images/comparison/after-sitting.png',
   },
   {
     category: 'Kitchen',
     title: 'Made for everyday living.',
     description: 'A tired kitchen reimagined with a cleaner look and a more functional feel.',
-    before: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
-    after: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
+    before: '/images/comparison/before-kitchen.png',
+    after: '/images/comparison/after-kitchen.png',
   },
   {
     category: 'Bathroom',
     title: 'Every detail, renewed.',
     description: 'A refreshed bathroom with timeless finishes and a calm, modern atmosphere.',
-    before: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=85',
-    after: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&w=1200&q=85',
+    before: '/images/comparison/before-bathroom.png',
+    after: '/images/comparison/after-bathroom.png',
   },
 ]
 
 export function BeforeAfterSection() {
   const [activeIndex, setActiveIndex] = useState(0)
   const [position, setPosition] = useState(50)
-
+  const [isPaused, setIsPaused] = useState(false)
   const project = transformations[activeIndex]
 
   useEffect(() => {
+    if (isPaused) return
+
     const interval = window.setInterval(() => {
       setActiveIndex((current) => (current + 1) % transformations.length)
       setPosition(50)
     }, 6000)
 
     return () => window.clearInterval(interval)
-  }, [])
+  }, [isPaused])
 
   const changeProject = (index: number) => {
     setActiveIndex(index)
@@ -69,7 +71,13 @@ export function BeforeAfterSection() {
 
         {/* Wide comparison image */}
 
-        <div className="relative aspect-[16/9] overflow-hidden bg-[#343536] sm:aspect-[2.2/1]">
+        <div
+          className="relative aspect-[16/9] overflow-hidden bg-[#343536] sm:aspect-[2.2/1]"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
           {transformations.map((item, index) => (
             <div
               key={item.category}

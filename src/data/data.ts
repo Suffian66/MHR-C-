@@ -65,50 +65,51 @@ export const services: Service[] = [
 
 export const projects = [
   {
-    title: 'The Modern Kitchen',
-    category: 'Kitchen renovation',
+    title: 'Blue Holly Crescent',
+    category: 'Complete Renovation of Bathroom & Laundry',
     description:
-      'A thoughtful kitchen transformation combining clean lines, warm materials and practical design to create a space for everyday living.',
+      'A thoughtful bathroom and laundry renovation combining clean lines, modern finishes and practical storage to create functional, stylish spaces for everyday living.',
     images: [
-      '/images/kitchen-1.jpg',
-      '/images/kitchen-2.jpg',
-      '/images/kitchen-3.jpg',
-      '/images/kitchen-4.jpg',
-      '/images/kitchen-5.jpg',
-      '/images/kitchen-6.jpg',
-      '/images/kitchen-7.jpg',
+      '/images/project-bhc/bathroom.JPG',
+      '/images/project-bhc/bathroom-4.JPG',
+      '/images/project-bhc/bathroom-2.JPG',
+      '/images/project-bhc/shower.JPG',
+      '/images/project-bhc/cabinet.jpg',
+      '/images/project-bhc/laundry.JPG',
+      '/images/project-bhc/laundry-2.jpg',
     ],
   },
   {
-    title: 'A Calmer Bathroom',
-    category: 'Bathroom renovation',
+    title: 'Absolute Avenue',
+    category: 'Complete Home Renovation',
     description:
-      'A refined bathroom refresh with considered finishes, balanced lighting and a calm, timeless atmosphere.',
+      'A complete home renovation combining thoughtful design, quality finishes and modern functionality to create a cohesive, comfortable and timeless living space.',
     images: [
-      '/images/bathroom-1.jpg',
-      '/images/bathroom-2.jpg',
-      '/images/bathroom-3.jpg',
-      '/images/bathroom-4.jpg',
-      '/images/bathroom-5.jpg',
-      '/images/bathroom-6.jpg',
-      '/images/bathroom-7.jpg',
+      '/images/project-aa/kitchen.jpg',
+      '/images/project-aa/hall.jpg',
+      '/images/project-aa/hall-2.jpg',
+      '/images/project-aa/bedroom.png',
+      '/images/project-aa/bathroom.jpg',
+      '/images/project-aa/bathroom-2.jpg',
+      '/images/project-aa/bathroom-3.jpg',
     ],
   },
   {
-    title: 'Room to Reimagine',
-    category: 'Interior renovation',
+    title: 'Redstone Crescent',
+    category: 'Complete Renovation',
     description:
-      'A considered home transformation that makes better use of space while bringing a consistent feel to every detail.',
+      'A thoughtful renovation combining clean lines, modern finishes and practical storage to create functional, stylish spaces for everyday living.',
     images: [
-      '/images/interior-1.jpg',
-      '/images/interior-2.jpg',
-      '/images/interior-3.jpg',
-      '/images/interior-4.jpg',
-      '/images/interior-5.jpg',
-      '/images/interior-6.jpg',
-      '/images/interior-7.jpg',
+      '/images/project-rsc/kitchen4.JPEG',
+      '/images/project-rsc/kitchen3.jpeg',
+      '/images/project-rsc/bathroom.jpeg',
+      '/images/project-rsc/bathroom2.jpeg',
+      '/images/project-rsc/bathroom6.jpeg',
+      '/images/project-rsc/sitting-area.jpeg',
+      '/images/project-rsc/staircase.jpeg',
     ],
   },
+
 ]
 
 
