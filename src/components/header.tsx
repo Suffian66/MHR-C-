@@ -19,20 +19,20 @@ export function Header() {
     }
 
     return (
-        <header className="sticky top-0 z-50 border-b border-[#343536]/10 bg-white/95 px-5 shadow-sm backdrop-blur-xl sm:px-8">
-            <div className="mx-auto flex h-20 max-w-7xl items-center justify-between sm:h-24">
+        <header className="sticky top-0 z-50 border-b border-[#343536]/10 bg-white/95 px-5 shadow-sm backdrop-blur-xl sm:px-5 lg:px-20">
+            <div className="mx-auto flex h-20 max-w-none items-center justify-between sm:h-24">
 
                 {/* Logo */}
                 <Link to="/" aria-label="MHR home" onClick={closeMenus}>
                     <img
                         src="/mhr-dark.png"
                         alt="MHR Renovations & Contractors"
-                        className="h-16 w-auto object-contain mix-blend-multiply sm:h-20"
+                        className="h-14 w-auto object-contain mix-blend-multiply sm:h-20"
                     />
                 </Link>
 
                 {/* Desktop navigation */}
-                <nav className="hidden items-center gap-8 text-xs font-bold uppercase tracking-[0.14em] lg:flex xl:gap-10">
+                <nav className="hidden items-center gap-8 text-md font-bold uppercase tracking-[0.14em] lg:flex xl:gap-12">
 
                     {navItems.slice(0, 1).map((item) => (
                         <Link

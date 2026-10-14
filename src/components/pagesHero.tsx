@@ -46,12 +46,11 @@ export function PageHero({
                 }}
             />
 
-            <div className="relative z-10 mx-auto flex min-h-[420px] w-full max-w-[1600px] flex-col px-6 sm:min-h-[440px] sm:px-8 lg:min-h-[460px] lg:px-16 xl:px-40">
-
+            <div className="relative z-10 mx-auto flex min-h-[420px] w-full max-w-[1600px] flex-col px-3 sm:min-h-[440px] sm:px-5 lg:min-h-[460px] lg:px-14">
                 {/* Breadcrumb navigation */}
                 <nav
                     aria-label="Breadcrumb"
-                    className="animate-hero-in flex items-center gap-2 pt-10 text-[10px] font-medium uppercase tracking-[0.16em] text-white/50 sm:pt-12 lg:pt-14"
+                    className="animate-hero-in flex items-center gap-2 pt-10 text-[12px] font-medium uppercase tracking-[0.16em] text-white/50 sm:pt-12 lg:pt-14"
                 >
                     <Link
                         to="/"
@@ -84,7 +83,7 @@ export function PageHero({
                         </h1>
 
                         <p
-                            className="animate-hero-in mt-7 max-w-lg text-sm leading-7 text-white/80 sm:text-base sm:leading-8"
+                            className="animate-hero-in mt-7 max-w-xl text-md leading-7 text-white/80 sm:text-base sm:leading-8 lg:text-lg"
                             style={{ animationDelay: '180ms' }}
                         >
                             {description}

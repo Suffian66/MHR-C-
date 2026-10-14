@@ -73,21 +73,21 @@ export default function HeroSection() {
 
 
             {/* Hero content */}
-            <div className="relative z-10 mx-auto w-full max-w-7xl px-2 py-28 sm:py-28">
+            <div className="relative z-10 mx-auto w-full max-w-none px-3 py-28 sm:px-5 sm:py-28 lg:px-22">
                 <div className="max-w-4xl">
-                    <p className="mb-7 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.3em] text-[#f19a53]">
-                        <span className="h-px w-12 bg-[#e87928]" />
+                    <p className="mb-7 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-[#f19a53]">
+                        <span className="h-px w-16 bg-[#e87928]" />
                         Quality. Care. Craft.
                     </p>
 
-                    <h1 className="max-w-4xl font-serif text-5xl leading-[1.05] sm:text-7xl lg:text-8xl">
+                    <h1 className="max-w-4xl font-serif text-5xl leading-[1.05] sm:text-7xl lg:text-9xl">
                         Make space for{' '}
                         <em className="font-normal text-[#f19a53]">better</em>
                         <br />
                         living.
                     </h1>
 
-                    <p className="mt-8 max-w-xl text-base leading-8 text-white/80 sm:text-lg">
+                    <p className="mt-8 max-w-xl text-base leading-8 text-white/80 sm:text-lg lg:text-xl">
                         Renovation specialists creating homes that feel as good as they
                         look. Personal service, considered design, and craftsmanship you
                         can trust.

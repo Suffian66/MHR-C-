@@ -10,30 +10,53 @@ import { Footer } from '../components/footer'
 import { Header } from '../components/header'
 import { services } from '../data/data'
 import { serviceDetails } from '../data/serviceData'
+import Topbar from '../components/topbar'
+
+
+interface HeroImage {
+    src: string;
+    caption?: string;
+}
+
+type Feature = {
+    number: string;
+    title: string;
+    text: string;
+};
+
+type Item = {
+    image: string;
+    caption: string;
+};
+
+interface Step {
+    title: string;
+    text: string;
+    // add other properties if needed
+}
 
 export default function ServicePage() {
-    const { slug } = useParams()
+
+    const { slug } = useParams<{ slug: string }>()
+
     const service = services.find((item) => item.slug === slug)
-    const details = slug ? serviceDetails[slug] : undefined
-    const heroImages = details.heroImages;
+
+    const details =
+        slug && Object.prototype.hasOwnProperty.call(serviceDetails, slug)
+            ? serviceDetails[slug as keyof typeof serviceDetails]
+            : undefined
 
     if (!service || !details) {
         return <Navigate to="/404" replace />
     }
 
+    const heroImages = details.heroImages
     const image = service.image
+
 
     return (
         <main className="min-h-screen overflow-hidden bg-[#f7f6f2] text-[#343536]">
-            {/* Top announcement bar */}
-            <div className="bg-[#343536] px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/80">
-                <div className="mx-auto flex max-w-7xl items-center justify-between">
-                    <span>Renovations built around you</span>
-                    <span className="hidden sm:block">
-                        Serving Oakville &amp; surrounds
-                    </span>
-                </div>
-            </div>
+            <Topbar />
             <Header />
 
             {/* Service Hero — Dark Gradient + Editorial Collage */}
@@ -196,7 +219,7 @@ export default function ServicePage() {
                         </div>
 
                         <div className="border-t border-white/15">
-                            {details.features.map((feature) => (
+                            {details.features.map((feature: Feature) => (
                                 <article
                                     key={feature.number}
                                     className="group grid gap-4 border-b border-white/15 py-7 sm:grid-cols-[50px_1fr] sm:gap-6 sm:py-9"
@@ -266,8 +289,9 @@ export default function ServicePage() {
                                         loading="lazy"
                                         className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                                     />
+
                                     <span className="absolute left-4 top-4 bg-[#f7f6f2] px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-[#343536]">
-                                        0{index + 1}
+                                        {String(index + 1).padStart(2, '0')}
                                     </span>
                                 </div>
 
@@ -275,6 +299,7 @@ export default function ServicePage() {
                                     <span className="font-serif text-xl">
                                         {item.caption}
                                     </span>
+
                                     <ArrowRight
                                         size={17}
                                         className="text-[#e87928] transition-transform group-hover:translate-x-1"
@@ -310,7 +335,7 @@ export default function ServicePage() {
                     <div className="relative mt-14 grid gap-8 md:grid-cols-3 md:gap-6 lg:mt-20">
                         <div className="absolute left-[16.66%] right-[16.66%] top-6 hidden h-px bg-[#343536]/15 md:block" />
 
-                        {details.process.map((step, index) => (
+                        {details.process.map((step: Step, index: number) => (
                             <article key={step.title} className="relative">
                                 <div className="relative z-10 flex size-12 items-center justify-center rounded-full border border-[#e87928] bg-[#eeeae1] font-serif text-sm text-[#e87928]">
                                     0{index + 1}

@@ -73,19 +73,50 @@ export function FeaturedProjects() {
     const project = projects[activeIndex]
 
     return (
+
         <section
             id="projects"
-            className="relative overflow-hidden bg-[#e87928] px-5 py-20 text-[#343536] sm:px-8 sm:py-28"
+            className="relative isolate overflow-hidden bg-[#e87928] px-5 py-20 text-[#343536] sm:px-8 sm:py-28"
         >
-            {/* Decorative background details */}
+            {/* Layered editorial background */}
             <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
+            >
+                {/* Soft amber glow */}
+                <div className="absolute -right-32 -top-40 h-[560px] w-[560px] rounded-full bg-[#ffbd79]/30 blur-[100px]" />
+
+                {/* Warm lower glow */}
+                <div className="absolute -bottom-48 -left-32 h-[500px] w-[500px] rounded-full bg-[#c9571d]/30 blur-[100px]" />
+
+                {/* Oversized editorial circle */}
+                <div className="absolute -right-24 top-20 h-[440px] w-[440px] rounded-full border border-white/50 sm:h-[600px] sm:w-[600px]" />
+
+                <div className="absolute -right-10 top-36 h-[340px] w-[340px] rounded-full border border-white/50 sm:h-[480px] sm:w-[480px]" />
+
+                {/* Fine diagonal texture */}
+                <div
+                    className="absolute inset-0 opacity-[0.25]"
+                    style={{
+                        backgroundImage:
+                            "repeating-linear-gradient(135deg, transparent 0px, transparent 42px, rgba(255,255,255,0.5) 43px, transparent 44px)",
+                    }}
+                />
+
+                {/* Subtle bottom edge */}
+                <div className="absolute inset-x-0 bottom-0 h-px bg-white/90" />
+            </div>
+
+
+            {/* Decorative background details */}
+            {/* <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-32 top-10 size-96 rounded-full border border-white/20"
             />
             <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-16 top-26 size-64 rounded-full border border-white/15"
-            />
+            /> */}
 
             <div className="relative mx-auto max-w-7xl">
                 {/* Section heading */}
@@ -195,52 +226,95 @@ export function FeaturedProjects() {
                         </div>
                     </div>
 
-                    {/* Artistic gallery with smooth crossfade */}
-                    <div className="relative h-[490px] sm:h-[620px] lg:h-[590px]">
+
+
+                    {/* Editorial Gallery — Larger Images with Tilted Frames */}
+                    <div className="relative h-[540px] sm:h-[690px] lg:h-[660px] xl:h-[720px]">
                         {[previousIndex, activeIndex]
-                            .filter((index): index is number => index !== null)
+                            .filter((index) => index !== null)
                             .filter((index, position, indexes) => indexes.indexOf(index) === position)
                             .map((index) => {
                                 const item = projects[index];
                                 const isActive = index === activeIndex;
 
                                 const positions = [
-                                    "col-start-1 row-start-3 row-span-6", // Left: image 1
-                                    "col-start-1 row-start-9 row-span-6", // Left: image 2
-                                    "col-start-2 row-start-1 row-span-4", // Right: image 1
-                                    "col-start-2 row-start-5 row-span-4", // Right: image 2
-                                    "col-start-2 row-start-9 row-span-4", // Right: image 3
+                                    // Top left
+                                    "left-[0%] top-[5%] h-[35%] w-[45%] sm:left-[1%] sm:top-[4%] sm:h-[36%] sm:w-[43%]",
+
+                                    // Top right
+                                    "right-[0%] top-[3%] h-[34%] w-[43%] sm:right-[1%] sm:top-[3%] sm:h-[35%] sm:w-[42%]",
+
+                                    // Large center image
+                                    "left-[19%] top-[22%] z-30 h-[53%] w-[62%] sm:left-[20%] sm:top-[21%] sm:h-[56%] sm:w-[60%]",
+
+                                    // Bottom left
+                                    "bottom-[3%] left-[1%] h-[34%] w-[44%] sm:bottom-[3%] sm:left-[1%] sm:h-[35%] sm:w-[43%]",
+
+                                    // Bottom right
+                                    "bottom-[3%] right-[0%] h-[33%] w-[43%] sm:bottom-[3%] sm:right-[1%] sm:h-[34%] sm:w-[42%]",
+                                ];
+
+                                const tilts = [
+                                    "-rotate-3 hover:rotate-0",
+                                    "rotate-3 hover:rotate-0",
+                                    "rotate-0",
+                                    "rotate-2 hover:rotate-0",
+                                    "-rotate-2 hover:rotate-0",
                                 ];
 
                                 return (
                                     <div
                                         key={item.title}
                                         aria-hidden={!isActive}
-                                        className={`absolute inset-0 grid grid-cols-2 grid-rows-12 gap-x-3 gap-y-3 sm:gap-x-5 sm:gap-y-4 ${isActive
-                                            ? `z-10 ${previousIndex !== null ? "project-gallery-enter" : ""}`
+                                        className={`absolute inset-0 ${isActive
+                                            ? `z-10 ${previousIndex !== null
+                                                ? "project-gallery-enter"
+                                                : ""
+                                            }`
                                             : "pointer-events-none z-0 project-gallery-exit"
                                             }`}
                                     >
                                         {item.images.slice(0, 5).map((image, imageIndex) => (
                                             <figure
                                                 key={`${item.title}-${imageIndex}`}
-                                                className={`group relative min-h-0 overflow-hidden border border-white/60 bg-white/20 shadow-[0_12px_28px_rgba(52,53,54,0.22)] ${positions[imageIndex]
-                                                    }`}
+                                                className={`
+                                absolute
+                                ${positions[imageIndex]}
+                                ${tilts[imageIndex]}
+                                overflow-hidden
+                                border-[7px] border-white
+                                bg-white
+                                p-1
+                                shadow-[0_16px_34px_rgba(52,53,54,0.28)]
+                                transition-all duration-500 ease-out
+                                sm:border-[10px] sm:p-1.5
+                                sm:shadow-[0_22px_44px_rgba(52,53,54,0.30)]
+                                ${imageIndex === 2
+                                                        ? "z-30"
+                                                        : "z-10"
+                                                    }
+                                ${isActive
+                                                        ? "cursor-pointer hover:z-50 hover:scale-[1.07] hover:-translate-y-1 hover:shadow-[0_30px_65px_rgba(52,53,54,0.42)]"
+                                                        : ""
+                                                    }
+                            `}
                                             >
                                                 <img
                                                     src={image}
                                                     alt={`${item.title} — project image ${imageIndex + 1}`}
                                                     loading="eager"
-                                                    className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                                                    className="h-full w-full object-cover"
                                                 />
 
-                                                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/20" />
+                                                <div className="pointer-events-none absolute inset-1 ring-1 ring-inset ring-white/30 sm:inset-1.5" />
                                             </figure>
                                         ))}
                                     </div>
                                 );
                             })}
                     </div>
+
+
 
 
 
@@ -398,7 +472,7 @@ export function Testimonials() {
     const names = ['Sarah & James', 'Mia Thompson', 'The Wilson family'];
 
     return (
-        <section className="bg-[#f7f6f2] px-5 py-16 text-[#343536] sm:px-8 sm:py-20">
+        <section className="bg-[#eeeae1] px-5 py-16 text-[#343536] sm:px-8 sm:py-20">
             <div className="mx-auto max-w-7xl">
                 <div className="mb-9 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
                     <div>

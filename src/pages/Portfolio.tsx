@@ -5,6 +5,7 @@ import { PageHero } from "../components/pagesHero";
 import { Header } from "../components/header";
 import Footer from "../components/footer";
 import { Cta } from "../components/pagesCta";
+import Topbar from "../components/topbar";
 
 const categories = [
     "All Projects",
@@ -28,15 +29,7 @@ export default function PortfolioPage() {
 
     return (
         <>
-            {/* Top announcement bar */}
-            <div className="bg-[#343536] px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.24em] text-white/80">
-                <div className="mx-auto flex max-w-7xl items-center justify-between">
-                    <span>Renovations built around you</span>
-                    <span className="hidden sm:block">
-                        Serving Oakville &amp; surrounds
-                    </span>
-                </div>
-            </div>
+            <Topbar />
 
             <Header />
 
