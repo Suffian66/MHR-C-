@@ -1,21 +1,66 @@
-// // src/context/AuthContext.tsx
-// import React, { useEffect, useState, createContext, useContext } from "react";
-// import { onAuthStateChanged, type User } from "firebase/auth";
-// import { auth } from "../../../../firebase.config";
 
-// const AuthContext = createContext<{ user: User | null }>({ user: null });
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
+import {
+    onAuthStateChanged,
+    type User,
+} from "firebase/auth";
+import { auth } from "../service/firebase";
 
-// export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [user, setUser] = useState<User | null>(null);
+interface AuthContextType {
+    user: User | null;
+    loading: boolean;
+}
 
-//   useEffect(() => {
-//     const unsubscribe = onAuthStateChanged(auth, (u) => setUser(u));
-//     return () => unsubscribe();
-//   }, []);
+const AuthContext = createContext<AuthContextType | undefined>(
+    undefined
+);
 
-//   return (
-//     <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
-//   );
-// };
+export const AuthProvider = ({
+    children,
+}: {
+    children: ReactNode;
+}) => {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
 
-// export const useAuth = () => useContext(AuthContext);
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (firebaseUser) => {
+                setUser(firebaseUser);
+                setLoading(false);
+            },
+            (error) => {
+                console.error("Authentication error:", error);
+                setUser(null);
+                setLoading(false);
+            }
+        );
+
+        return unsubscribe;
+    }, []);
+
+    return (
+        <AuthContext.Provider value={{ user, loading }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
+
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+
+    if (!context) {
+        throw new Error(
+            "useAuth must be used within an AuthProvider"
+        );
+    }
+
+    return context;
+};

@@ -1,12 +1,12 @@
-// // src/app/store.ts
-// import { configureStore } from "@reduxjs/toolkit";
-// import blogReducer from "../features/blogSlice";
+// src/app/store.ts
+import { configureStore } from "@reduxjs/toolkit";
+import blogReducer from "../features/blogSlice";
 
-// export const store = configureStore({
-//   reducer: {
-//     blog: blogReducer,
-//   },
-// });
+export const store = configureStore({
+    reducer: {
+        blog: blogReducer,
+    },
+});
 
-// export type RootState = ReturnType<typeof store.getState>;
-// export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

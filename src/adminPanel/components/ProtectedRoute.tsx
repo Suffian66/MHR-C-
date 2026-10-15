@@ -1,17 +1,42 @@
-// // src/components/ProtectedRoute.tsx
-// import React from "react";
-// import { Navigate } from "react-router-dom";
-// import { useAuth } from "../features/authContext";
 
-// const ADMIN_EMAIL = "test@email.com";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../features/authContext";
 
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const { user } = useAuth();
+const ADMIN_EMAIL = "admin@mail.com";
 
-//   if (!user) return <Navigate to="/login" replace />;
-//   if (user.email !== ADMIN_EMAIL) return <Navigate to="/" replace />;
+const ProtectedRoute = () => {
+    const { user, loading } = useAuth();
+    const location = useLocation();
 
-//   return <>{children}</>;
-// };
+    if (loading) {
+        return (
+            <div className="flex min-h-screen items-center justify-center bg-[#f7f6f2]">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="h-10 w-10 animate-spin rounded-full border-4 border-[#e87928]/20 border-t-[#e87928]" />
 
-// export default ProtectedRoute;
+                    <p className="text-sm font-medium tracking-wide text-[#757676]">
+                        Verifying your access...
+                    </p>
+                </div>
+            </div>
+        );
+    }
+
+    if (!user) {
+        return (
+            <Navigate
+                to="/login"
+                state={{ from: location }}
+                replace
+            />
+        );
+    }
+
+    if (user.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+        return <Navigate to="/" replace />;
+    }
+
+    return <Outlet />;
+};
+
+export default ProtectedRoute;

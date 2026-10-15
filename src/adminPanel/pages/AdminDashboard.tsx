@@ -1,9 +1,9 @@
-// import ContentDashboard from "./ContentDashboard"
+import ContentDashboard from "../components/ContentDashboard"
 
-// const AdminDashboard = () => {
-//   return (
-//     <ContentDashboard />
-//   )
-// }
+const AdminDashboard = () => {
+    return (
+        <ContentDashboard />
+    )
+}
 
-// export default AdminDashboard
+export default AdminDashboard
