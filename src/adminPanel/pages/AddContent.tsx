@@ -4,6 +4,7 @@ import type { MediaItem } from "../features/contentContext";
 import { addPage, addSection, getPages } from "../service/PageService";
 import { db } from "../service/firebase";
 import Layout from "../components/Layout";
+import { toast } from "react-toastify";
 
 
 const AddContent: React.FC = () => {
@@ -51,7 +52,7 @@ const AddContent: React.FC = () => {
         try {
             const id = await addPage(pageSlug, pageTitle);
             setPageId(id);
-            alert("Page created!");
+            toast.success("Page created!");
             const pages = await getPages();
             setAllPages(pages);
         } catch (err) {
@@ -114,25 +115,6 @@ const AddContent: React.FC = () => {
 
         let newBlock: ContentBlock;
 
-        //   if (type === "image") {
-        //     newBlock = {
-        //       id: `${type}${existingCount + 1}`,
-        //       type,
-        //       imageId: "", // ✅ only image block has this
-        //       order: updated[sectionIndex].content.length + 1,
-        //     };
-        //   } else {
-        //     newBlock = {
-        //       id: `${type}${existingCount + 1}`,
-        //       type,
-        //       text: "", // ✅ only heading/paragraph blocks have this
-        //       order: updated[sectionIndex].content.length + 1,
-        //     };
-        //   }
-
-        //   updated[sectionIndex].content.push(newBlock);
-        //   setSections(updated);
-        // };
         if (type === "image") {
             newBlock = {
                 id: `${type}${existingCount + 1}`,
@@ -185,7 +167,7 @@ const AddContent: React.FC = () => {
                     await addSection(pageId, sec.title, sec.type, sec.order, sec.content);
                 }
             }
-            alert("Sections saved!");
+            toast.success("Sections saved!");
             setSections([]);
             const snapshot = await getDocs(collection(db, "pages", pageId, "sections"));
             setExistingSections(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Section[]);

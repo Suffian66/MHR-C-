@@ -109,14 +109,6 @@ export function FeaturedProjects() {
 
 
             {/* Decorative background details */}
-            {/* <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-32 top-10 size-96 rounded-full border border-white/20"
-            />
-            <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -right-16 top-26 size-64 rounded-full border border-white/15"
-            /> */}
 
             <div className="relative mx-auto max-w-7xl">
                 {/* Section heading */}
@@ -559,14 +551,14 @@ export function Testimonials() {
                                             {names[index]}
                                         </p>
 
-                                        <p
+                                        {/* <p
                                             className={`mt-0.5 text-[10px] font-medium uppercase tracking-[0.14em] ${index === 0
                                                 ? 'text-white/45'
                                                 : 'text-[#343536]/45'
                                                 }`}
                                         >
                                             MHR Client
-                                        </p>
+                                        </p> */}
                                     </div>
                                 </div>
 

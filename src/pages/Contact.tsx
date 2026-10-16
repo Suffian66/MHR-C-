@@ -97,7 +97,7 @@ export default function Contact() {
                                         Our service area
                                     </span>
                                     <span className="mt-1 block text-sm font-medium">
-                                        Oakville, Ontario, Canada
+                                        Ontario, Canada
                                     </span>
                                 </span>
                             </div>

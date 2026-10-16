@@ -12,7 +12,7 @@ const categories = [
     "Kitchens",
     "Bathrooms",
     "Basements",
-    "Window Coverings",
+    "Blinds / Window Coverings",
     "Drywall",
     "Home Staging",
 ];
@@ -72,7 +72,7 @@ export default function PortfolioPage() {
                         </div>
 
                         {/* Category filters */}
-                        <div className="mb-12 flex gap-2 overflow-x-auto pb-3">
+                        <div className="mb-12 flex gap-4 overflow-x-auto pb-3">
                             {categories.map((category) => {
                                 const isActive = activeCategory === category;
 
@@ -81,7 +81,7 @@ export default function PortfolioPage() {
                                         key={category}
                                         type="button"
                                         onClick={() => setActiveCategory(category)}
-                                        className={`shrink - 0 border px - 4 py - 2.5 text - sm transition duration - 200 ${isActive
+                                        className={`shrink-0 border px-4 py-2.5 text-sm transition duration-200 ${isActive
                                             ? "border-[#343536] bg-[#343536] text-white"
                                             : "border-[#343536]/15 bg-transparent text-[#343536]/70 hover:border-[#e87928] hover:text-[#e87928]"
                                             } `}
