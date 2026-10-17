@@ -1,29 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-
-const heroSlides = [
-    {
-        image:
-            '/images/project-rsc/kitchen4.JPEG',
-        alt: 'Elegant modern home interior',
-    },
-    {
-        image:
-            '/images/project-rsc/bathroom2.jpeg',
-        alt: 'Modern renovation of a bathroom',
-    },
-    {
-        image:
-            '/images/project-rsc/sitting-area.jpeg',
-        alt: 'Beautifully renovated living space',
-    },
-    {
-        image:
-            '/images/project-rsc/kitchen.jpeg',
-        alt: 'Sophisticated modern living room',
-    },
-]
+import { useContent } from '../adminPanel/features/contentContext'
 
 export default function HeroSection() {
     const [activeSlide, setActiveSlide] = useState(0)
@@ -35,6 +13,46 @@ export default function HeroSection() {
 
         return () => window.clearInterval(interval)
     }, [])
+
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const banner = sectionsBySlug[slug]?.["Banner"]?.blocks;
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
+
+    const heroSlides = [
+        {
+            image: getUrl(banner?.image1.imageId) || '/images/project-rsc/kitchen4.JPEG',
+            alt: 'Elegant modern home interior',
+        },
+        {
+            image: getUrl(banner?.image2.imageId) || '/images/project-rsc/bathroom2.jpeg',
+            alt: 'Modern renovation of a bathroom',
+        },
+        {
+            image: getUrl(banner?.image3.imageId) || '/images/project-rsc/sitting-area.jpeg',
+            alt: 'Beautifully renovated living space',
+        },
+        {
+            image: getUrl(banner?.image4.imageId) || '/images/project-rsc/kitchen.jpeg',
+            alt: 'Sophisticated modern living room',
+        },
+    ]
 
     return (
         <section
@@ -77,20 +95,18 @@ export default function HeroSection() {
                 <div className="max-w-4xl">
                     <p className="mb-7 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.3em] text-[#f19a53]">
                         <span className="h-px w-16 bg-[#e87928]" />
-                        Quality. Care. Craft.
+                        {banner?.heading1?.text}
                     </p>
 
                     <h1 className="max-w-4xl font-serif text-5xl leading-[1.05] sm:text-7xl lg:text-9xl">
-                        Make space for{' '}
-                        <em className="font-normal text-[#f19a53]">better</em>
+                        {banner?.heading2?.text}{' '}
+                        <em className="font-normal text-[#f19a53]">{banner?.heading3?.text}</em>
                         <br />
-                        living.
+                        {banner?.heading4?.text}
                     </h1>
 
                     <p className="mt-8 max-w-xl text-base leading-8 text-white/80 sm:text-lg lg:text-xl">
-                        Renovation specialists creating homes that feel as good as they
-                        look. Personal service, considered design, and craftsmanship you
-                        can trust.
+                        {banner?.paragraph1?.text}
                     </p>
 
                     <div className="mt-10 flex flex-wrap gap-4">

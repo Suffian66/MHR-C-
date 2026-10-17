@@ -108,7 +108,7 @@ export default function ServicePage() {
 
                         <div className="mt-12 border-t border-white/10 pt-5">
                             <span className="text-xs uppercase tracking-[0.2em] text-white/40">
-                                MHR Renovations & Contractors
+                                MHR Renovations & Contracting
                             </span>
                         </div>
                     </div>
@@ -157,7 +157,7 @@ export default function ServicePage() {
                     <div>
                         <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#e87928]">
                             <span className="h-px w-8 bg-[#e87928]" />
-                            {service.number} / A considered approach
+                            A considered approach
                         </p>
 
                         <h2 className="mt-6 max-w-2xl font-serif text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
@@ -309,10 +309,10 @@ export default function ServicePage() {
                         ))}
                     </div>
 
-                    <p className="mt-6 text-xs leading-5 text-[#343536]/45">
+                    {/* <p className="mt-6 text-xs leading-5 text-[#343536]/45">
                         Illustrative design inspiration. Replace these images with
                         MHR project photography when available.
-                    </p>
+                    </p> */}
                 </div>
             </section>
 

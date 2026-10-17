@@ -3,8 +3,10 @@ import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Mail, MapPin, Move
 import { ServiceSlider } from './service-slider';
 import { projects } from '../data/data';
 import { useEffect, useState } from 'react';
+import { useContent } from '../adminPanel/features/contentContext';
 
 export function ServicesSection() {
+
     return (
         <section
             id="services"
@@ -336,6 +338,26 @@ export function FeaturedProjects() {
 
 
 export function AboutPreview() {
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const about = sectionsBySlug[slug]?.["About Us"]?.blocks;
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
     return (
         <section className="overflow-hidden bg-[#eeeae1] px-6 py-24 sm:py-32">
             <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2 lg:gap-20">
@@ -344,20 +366,18 @@ export function AboutPreview() {
                 <div className="relative z-10">
                     <p className="mb-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.28em] text-[#e87928]">
                         <span className="h-px w-10 bg-[#e87928]" />
-                        A little about us
+                        {about?.heading1?.text}
                     </p>
 
                     <h2 className="max-w-xl font-serif text-4xl leading-[1.12] text-[#343536] sm:text-6xl">
-                        Renovating with{' '}
-                        <em className="font-normal text-[#e87928]">heart.</em>
+                        {about?.heading2?.text}{' '}
+                        <em className="font-normal text-[#e87928]">{about?.heading3?.text}</em>
                         <br />
-                        Building with purpose.
+                        {about?.heading4?.text}
                     </h2>
 
                     <p className="mt-7 max-w-xl text-base leading-8 text-[#343536]/70 sm:text-lg">
-                        MHR began with a simple belief: renovation should feel exciting,
-                        not overwhelming. Today, our team combines practical experience,
-                        thoughtful design, and genuine care to create homes made for living.
+                        {about?.paragraph1?.text}
                     </p>
 
                     <Link
@@ -373,18 +393,18 @@ export function AboutPreview() {
 
                     <div className="mt-12 flex items-center gap-5 border-t border-[#343536]/15 pt-6">
                         <div>
-                            <p className="font-serif text-3xl text-[#343536]">15+</p>
+                            <p className="font-serif text-3xl text-[#343536]">{about?.heading5?.text}</p>
                             <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#343536]/60">
-                                Years of craft
+                                {about?.heading6?.text}
                             </p>
                         </div>
 
                         <div className="h-10 w-px bg-[#343536]/20" />
 
                         <div>
-                            <p className="font-serif text-3xl text-[#343536]">Every</p>
+                            <p className="font-serif text-3xl text-[#343536]">{about?.heading7?.text}</p>
                             <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#343536]/60">
-                                Detail matters
+                                {about?.heading8?.text}
                             </p>
                         </div>
                     </div>
@@ -400,7 +420,7 @@ export function AboutPreview() {
                         {/* Main image */}
                         <div className="absolute left-[8%] top-[5%] h-[65%] w-[78%] overflow-hidden rounded-sm shadow-xl transition-transform duration-500 hover:scale-[1.02]">
                             <img
-                                src="/images/project-aa/hall.jpg"
+                                src={getUrl(about?.image1?.imageId) || '/images/project-aa/hall.jpg'}
                                 alt="Beautifully designed modern living room"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -410,7 +430,7 @@ export function AboutPreview() {
                         {/* Overlapping kitchen image */}
                         <div className="absolute bottom-[5%] left-0 z-10 h-[38%] w-[52%] rotate-[-4deg] overflow-hidden border-[6px] border-[#eeeae1] shadow-xl transition-transform duration-500 hover:rotate-0">
                             <img
-                                src="/images/bathroom-1/3.jpg"
+                                src={getUrl(about?.image2.imageId) || "/images/bathroom-1/3.jpg"}
                                 alt="Contemporary kitchen renovation"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -420,7 +440,7 @@ export function AboutPreview() {
                         {/* Smaller detail image */}
                         <div className="absolute bottom-[13%] right-0 z-20 h-[30%] w-[43%] rotate-[4deg] overflow-hidden border-[6px] border-[#eeeae1] shadow-xl transition-transform duration-500 hover:rotate-0">
                             <img
-                                src="/images/bathroom-1/2.jpg"
+                                src={getUrl(about?.image3.imageId) || "/images/bathroom-1/2.jpg"}
                                 alt="Refined interior finishes and furnishings"
                                 className="h-full w-full object-cover"
                                 loading="lazy"
@@ -431,9 +451,7 @@ export function AboutPreview() {
                         <div className="absolute right-[3%] top-[1%] z-30 flex h-[94px] w-[94px] flex-col items-center justify-center rounded-full bg-[#e87928] text-center text-white shadow-lg sm:right-[2%] sm:h-[112px] sm:w-[112px]">
                             <MoveUpRight size={20} strokeWidth={1.5} />
                             <span className="mt-1 text-[9px] font-bold uppercase leading-4 tracking-[0.15em]">
-                                Made with
-                                <br />
-                                intention
+                                {about?.heading9?.text}
                             </span>
                         </div>
 
@@ -442,7 +460,7 @@ export function AboutPreview() {
                     </div>
 
                     <p className="mt-1 text-center text-[10px] font-semibold uppercase tracking-[0.25em] text-[#343536]/50">
-                        Thoughtful spaces. Lasting impressions.
+                        {about?.heading10?.text}
                     </p>
                 </div>
 
