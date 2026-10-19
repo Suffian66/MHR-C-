@@ -4,8 +4,23 @@ import { ServiceSlider } from './service-slider';
 import { projects } from '../data/data';
 import { useEffect, useState } from 'react';
 import { useContent } from '../adminPanel/features/contentContext';
-
 export function ServicesSection() {
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const services = sectionsBySlug[slug]?.["Services"]?.blocks;
 
     return (
         <section
@@ -16,20 +31,18 @@ export function ServicesSection() {
                 <div className="mb-14 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
                     <div>
                         <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-[#f19a53]">
-                            What we do
+                            {services?.heading1?.text}
                         </p>
                         <h2 className="font-serif text-4xl sm:text-6xl">
-                            Expertise with{' '}
-                            <em className="font-normal text-[#f19a53]">intention.</em>
+                            {services?.heading2?.text}{' '}
+                            <em className="font-normal text-[#f19a53]">{services?.heading9?.text}</em>
                         </h2>
                     </div>
 
                     <p className="max-w-xs text-sm leading-6 text-white/60">
-                        From the first conversation to the final walkthrough, every detail
-                        is considered.
+                        {services?.paragraph1?.text}
                     </p>
                 </div>
-
                 <ServiceSlider />
             </div>
         </section>

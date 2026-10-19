@@ -1,51 +1,80 @@
 import { useState, useEffect } from 'react'
 import { ArrowLeft, ArrowRight, MoveHorizontal } from 'lucide-react'
-
-const transformations = [
-  {
-    category: 'Living room',
-    title: 'A fresh perspective.',
-    description: 'A dated living space transformed with warm materials and considered details.',
-    before: '/images/comparison/before-sitting.png',
-    after: '/images/comparison/after-sitting.png',
-  },
-  {
-    category: 'Kitchen',
-    title: 'Made for everyday living.',
-    description: 'A tired kitchen reimagined with a cleaner look and a more functional feel.',
-    before: '/images/comparison/before-kitchen.png',
-    after: '/images/comparison/after-kitchen.png',
-  },
-  {
-    category: 'Bathroom',
-    title: 'Every detail, renewed.',
-    description: 'A refreshed bathroom with timeless finishes and a calm, modern atmosphere.',
-    before: '/images/comparison/before-bathroom.png',
-    after: '/images/comparison/after-bathroom.png',
-  },
-]
+import { useContent } from '../adminPanel/features/contentContext';
 
 export function BeforeAfterSection() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [position, setPosition] = useState(50)
-  const [isPaused, setIsPaused] = useState(false)
-  const project = transformations[activeIndex]
+  const slug = "home";
+
+  const {
+    sectionsBySlug,
+    loadSectionsBySlug,
+    loading,
+    media,
+  } = useContent();
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [position, setPosition] = useState(50);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const getUrl = (imageId?: string) =>
+    media.find((m) => m.id === imageId)?.mediaUrl || null;
 
   useEffect(() => {
-    if (isPaused) return
+    loadSectionsBySlug(slug);
+  }, [slug]);
+
+  // Keep ALL hooks above the loading return.
+  useEffect(() => {
+    if (isPaused) return;
 
     const interval = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % transformations.length)
-      setPosition(50)
-    }, 6000)
+      setActiveIndex((current) => (current + 1) % transformations.length);
+      setPosition(50);
+    }, 6000);
 
-    return () => window.clearInterval(interval)
-  }, [isPaused])
+    return () => window.clearInterval(interval);
+  }, [isPaused]);
+
+  if (loading && !sectionsBySlug[slug]) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <p className="text-xl font-bold">Loading...</p>
+      </div>
+    );
+  }
+
+  const difference = sectionsBySlug[slug]?.["Difference"]?.blocks;
 
   const changeProject = (index: number) => {
-    setActiveIndex(index)
-    setPosition(50)
-  }
+    setActiveIndex(index);
+    setPosition(50);
+  };
+
+  const transformations = [
+    {
+      category: difference?.heading2?.text,
+      title: difference?.heading3?.text,
+      description: difference?.paragraph2?.text,
+      before: getUrl(difference?.image1?.imageId) || '/images/comparison/before-sitting.png',
+      after: getUrl(difference?.image2?.imageId) || '/images/comparison/after-sitting.png',
+    },
+    {
+      category: difference?.heading4?.text,
+      title: difference?.heading5?.text,
+      description: difference?.paragraph3?.text,
+      before: getUrl(difference?.image3?.imageId) || '/images/comparison/before-kitchen.png',
+      after: getUrl(difference?.image4?.imageId) || '/images/comparison/after-kitchen.png',
+    },
+    {
+      category: difference?.heading6?.text,
+      title: difference?.heading7?.text,
+      description: difference?.paragraph4?.text,
+      before: getUrl(difference?.image5?.imageId) || '/images/comparison/before-bathroom.png',
+      after: getUrl(difference?.image6?.imageId) || '/images/comparison/after-bathroom.png',
+    },
+  ];
+
+  const project = transformations[activeIndex];
 
   return (
     <section
@@ -60,12 +89,12 @@ export function BeforeAfterSection() {
               Before & after
             </p> */}
             <h2 className="font-serif text-3xl sm:text-5xl">
-              See the <em className="font-normal text-[#e87928]">difference.</em>
+              {difference?.heading1?.text}<em className="font-normal text-[#e87928]">{difference?.heading8?.text}</em>
             </h2>
           </div>
 
           <p className="max-w-xs text-xs leading-6 text-[#343536]/60 sm:text-sm">
-            Every renovation has a story. Explore the transformation.
+            {difference?.paragraph1?.text}
           </p>
         </div>
 

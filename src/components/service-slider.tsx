@@ -6,29 +6,61 @@ import {
   ChevronLeft,
   ChevronRight,
 } from 'lucide-react'
-import { services } from '../data/data'
+import { useContent } from '../adminPanel/features/contentContext';
+import { getServiceData } from '../data/data';
+
+export interface Service {
+  slug: string;
+  number: string;
+  title: string;
+  text: string;
+  image: string;
+}
 
 export function ServiceSlider() {
+  const slug = "home";
+  const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+  useEffect(() => {
+    loadSectionsBySlug(slug);
+  }, [slug]);
+
+  if (loading && !sectionsBySlug[slug]) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <p className="text-xl font-bold">Loading...</p>
+      </div>
+    );
+  }
+
+  const getUrl = (imageId?: string) =>
+    media.find((m) => m.id === imageId)?.mediaUrl || null;
+
+  const servicesContent =
+    sectionsBySlug['home']?.['Services']?.blocks;
+
+  const serviceData = getServiceData(servicesContent, getUrl);
+
   const [active, setActive] = useState(0)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActive((current) => (current + 1) % services.length)
+      setActive((current) => (current + 1) % serviceData.length)
     }, 5000)
 
     return () => window.clearInterval(interval)
   }, [])
 
   const nextSlide = () => {
-    setActive((current) => (current + 1) % services.length)
+    setActive((current) => (current + 1) % serviceData.length)
   }
 
   const previousSlide = () => {
-    setActive((current) => (current - 1 + services.length) % services.length)
+    setActive((current) => (current - 1 + serviceData.length) % serviceData.length)
   }
 
   const visibleServices = [0, 1, 2].map(
-    (offset) => services[(active + offset) % services.length],
+    (offset) => serviceData[(active + offset) % serviceData.length],
   )
 
   return (
@@ -104,13 +136,13 @@ export function ServiceSlider() {
           <span className="h-px w-10 bg-[#e87928]" />
 
           <span className="text-xs tracking-widest text-white/50">
-            {String(services.length).padStart(2, '0')} SERVICES
+            {String(serviceData.length).padStart(2, '0')} SERVICES
           </span>
         </div>
 
         {/* Pagination dots */}
         <div className="flex items-center gap-2">
-          {services.map((service, index) => (
+          {serviceData.map((service, index) => (
             <button
               key={service.slug}
               type="button"
@@ -118,8 +150,8 @@ export function ServiceSlider() {
               aria-pressed={index === active}
               onClick={() => setActive(index)}
               className={`h-1.5 rounded-full transition-all duration-500 ${index === active
-                  ? 'w-9 bg-[#e87928]'
-                  : 'w-2 bg-white/30 hover:bg-white/70'
+                ? 'w-9 bg-[#e87928]'
+                : 'w-2 bg-white/30 hover:bg-white/70'
                 }`}
             />
           ))}

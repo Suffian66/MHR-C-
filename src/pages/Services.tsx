@@ -8,9 +8,10 @@ import {
 } from 'lucide-react'
 import { Footer } from '../components/footer'
 import { Header } from '../components/header'
-import { services } from '../data/data'
-import { serviceDetails } from '../data/serviceData'
 import Topbar from '../components/topbar'
+import { useContent } from '../adminPanel/features/contentContext'
+import { useEffect, useMemo } from 'react'
+import { getServiceDetails, mapSectionContent } from '../data/serviceData'
 
 
 interface HeroImage {
@@ -35,24 +36,90 @@ interface Step {
     // add other properties if needed
 }
 
+
 export default function ServicePage() {
-
     const { slug } = useParams<{ slug: string }>()
+    const sharedSlug = 'services';
+    const {
+        sectionsBySlug,
+        loadSectionsBySlug,
+        loading,
+        media,
+    } = useContent();
 
-    const service = services.find((item) => item.slug === slug)
+    const firebaseSlugByRouteSlug: Record<string, string> = {
+        'kitchen-renovation': 'kitchen-renovation',
+        'bathroom-renovation': 'bathroom-renovation',
+        'basement-renovation': 'basement-renovation',
+        'window-covering': 'window-covering',
+        'drywall': 'drywall',
+        'home-staging': 'home-staging',
+    };
 
-    const details =
-        slug && Object.prototype.hasOwnProperty.call(serviceDetails, slug)
-            ? serviceDetails[slug as keyof typeof serviceDetails]
-            : undefined
+    const firebaseSlug = slug
+        ? firebaseSlugByRouteSlug[slug]
+        : undefined;
 
-    if (!service || !details) {
-        return <Navigate to="/404" replace />
+    useEffect(() => {
+        if (firebaseSlug) {
+            loadSectionsBySlug(firebaseSlug);
+        }
+        loadSectionsBySlug(sharedSlug);
+    }, [firebaseSlug, loadSectionsBySlug]);
+
+    // const service = services.find((item) => item.slug === slug);
+    const serviceTitles: Record<string, string> = {
+        'kitchen-renovation': 'Kitchen Renovations',
+        'bathroom-renovation': 'Bathroom Renovations',
+        'basement-renovation': 'Basement Renovations',
+        'window-covering': 'Window Coverings',
+        drywall: 'Drywall',
+        'home-staging': 'Home Staging',
+    };
+
+    const serviceTitle = slug ? serviceTitles[slug] : undefined;
+    const getUrl = (imageId?: string) =>
+        media.find((item) => item.id === imageId)?.mediaUrl || null;
+    // Read the individual service's Firebase sections.
+    const rawSections = firebaseSlug
+        ? sectionsBySlug[firebaseSlug]
+        : undefined;
+    // Adapt this line to the structure shown in your console.
+    const sections = useMemo(() => {
+        if (!rawSections) return {};
+
+        const sectionArray = Array.isArray(rawSections)
+            ? rawSections
+            : Object.entries(rawSections).map(([key, value]: [string, any]) => ({
+                ...value,
+                title: value.title || key,
+                content: value.content || value.blocks || [],
+            }));
+
+        return mapSectionContent(sectionArray);
+    }, [rawSections]);
+
+    const firebaseDetails = firebaseSlug
+        ? getServiceDetails(firebaseSlug, sections, getUrl)
+        : null;
+
+    const details = firebaseDetails;
+
+    if (firebaseSlug && loading && !rawSections) {
+        return <div>Loading service...</div>;
     }
 
-    const heroImages = details.heroImages
-    const image = service.image
+    if (!serviceTitle || !details) {
+        return <Navigate to="/404" replace />;
+    }
 
+    const image = details.heroImages?.[0]?.image || '/images/kitchen.png';
+
+    const intro = sectionsBySlug['services']?.['Intro']?.blocks;
+    const detailing = sectionsBySlug['services']?.['Details ']?.blocks;
+    const process = sectionsBySlug['services']?.['Process']?.blocks;
+    const gallery = sectionsBySlug['services']?.['Gallery']?.blocks;
+    const cta = sectionsBySlug['services']?.['CTA']?.blocks;
 
     return (
         <main className="min-h-screen overflow-hidden bg-[#f7f6f2] text-[#343536]">
@@ -78,7 +145,7 @@ export default function ServicePage() {
                                 Services
                             </Link>
                             <span>/</span>
-                            <span className="text-[#f19a53]">{service.title}</span>
+                            <span className="text-[#f19a53]">{serviceTitle}</span>
                         </nav>
 
                         <p className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-[#f19a53]">
@@ -134,7 +201,7 @@ export default function ServicePage() {
                                     >
                                         <img
                                             src={item.image}
-                                            alt={item.caption || `${service.title} project`}
+                                            alt={item.caption || `${serviceTitle} project`}
                                             loading={index < 3 ? "eager" : "lazy"}
                                             className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
@@ -157,7 +224,7 @@ export default function ServicePage() {
                     <div>
                         <p className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#e87928]">
                             <span className="h-px w-8 bg-[#e87928]" />
-                            A considered approach
+                            {intro?.heading1?.text}
                         </p>
 
                         <h2 className="mt-6 max-w-2xl font-serif text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
@@ -181,7 +248,7 @@ export default function ServicePage() {
                         <div className="relative aspect-[4/5] overflow-hidden bg-[#e7e2d9]">
                             <img
                                 src={image}
-                                alt={`${service.title} design inspiration`}
+                                alt={`${serviceTitle} design inspiration`}
                                 loading="lazy"
                                 className="size-full object-cover transition-transform duration-700 hover:scale-[1.03]"
                             />
@@ -206,15 +273,13 @@ export default function ServicePage() {
                     <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
                         <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#f19a53]">
-                                The details matter
+                                {detailing?.heading1?.text}
                             </p>
                             <h2 className="mt-5 max-w-md font-serif text-4xl leading-tight sm:text-5xl">
-                                Thoughtful choices. A more considered result.
+                                {detailing?.heading2?.text}
                             </h2>
                             <p className="mt-5 max-w-sm text-sm leading-7 text-white/60">
-                                Every project is different. We focus on the details
-                                that make your space more functional, cohesive, and
-                                suited to the way you live.
+                                {detailing?.paragraph1?.text}
                             </p>
                         </div>
 
@@ -253,7 +318,7 @@ export default function ServicePage() {
                     <div className="mb-12 flex flex-col justify-between gap-5 sm:mb-16 sm:flex-row sm:items-end">
                         <div className="max-w-2xl">
                             <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e87928]">
-                                Materials / Form / Feeling
+                                {gallery?.heading1?.text}
                             </p>
                             <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
                                 {details.galleryTitle}
@@ -285,7 +350,7 @@ export default function ServicePage() {
                                 >
                                     <img
                                         src={item.image}
-                                        alt={`${service.title}: ${item.caption}`}
+                                        alt={`${serviceTitle}: ${item.caption}`}
                                         loading="lazy"
                                         className="size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                                     />
@@ -321,14 +386,13 @@ export default function ServicePage() {
                 <div className="mx-auto max-w-7xl">
                     <div className="mx-auto max-w-2xl text-center">
                         <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#e87928]">
-                            A clearer way forward
+                            {process?.heading1?.text}
                         </p>
                         <h2 className="mt-5 font-serif text-4xl leading-tight sm:text-5xl">
-                            From first conversation to final details.
+                            {process?.heading2?.text}
                         </h2>
                         <p className="mt-5 text-sm leading-7 text-[#343536]/65">
-                            Good work starts with understanding what matters to you
-                            and planning the details before the work begins.
+                            {process?.paragraph1?.text}
                         </p>
                     </div>
 
@@ -378,8 +442,7 @@ export default function ServicePage() {
                         </h2>
 
                         <p className="mt-5 max-w-xl text-sm leading-7 text-white/80 sm:text-base">
-                            Tell us what you have in mind. We’d love to learn
-                            about your project and help you explore the next step.
+                            {cta?.paragraph1?.text}
                         </p>
                     </div>
 

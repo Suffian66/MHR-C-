@@ -7,39 +7,62 @@ import {
     KeyRound,
     Sparkles,
 } from 'lucide-react'
+import { useContent } from '../adminPanel/features/contentContext';
+import { useEffect } from 'react';
 
-const steps = [
-    {
-        number: '01',
-        title: 'Start with a conversation',
-        text: 'Tell us what you are imagining, what matters most, and how you want your home to feel.',
-        icon: ClipboardList,
-        label: 'DISCOVER',
-    },
-    {
-        number: '02',
-        title: 'Shape the right plan',
-        text: 'We turn your ideas into a clear scope, thoughtful choices, and a practical plan for your space.',
-        icon: Sparkles,
-        label: 'PLAN',
-    },
-    {
-        number: '03',
-        title: 'Build with care',
-        text: 'Our skilled team brings your vision to life with careful workmanship and clear communication.',
-        icon: Hammer,
-        label: 'CREATE',
-    },
-    {
-        number: '04',
-        title: 'Enjoy the transformation',
-        text: 'We take care of the finishing touches so you can step into a space that feels like home.',
-        icon: KeyRound,
-        label: 'COMPLETE',
-    },
-]
+
 
 export function ProcessSection() {
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const process = sectionsBySlug[slug]?.["How we work"]?.blocks;
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
+    const steps = [
+        {
+            number: '01',
+            title: process?.heading5?.text,
+            text: process?.paragraph2?.text,
+            icon: ClipboardList,
+            label: process?.heading4?.text,
+        },
+        {
+            number: '02',
+            title: process?.heading7?.text,
+            text: process?.paragraph3?.text,
+            icon: Sparkles,
+            label: process?.heading6?.text,
+        },
+        {
+            number: '03',
+            title: process?.heading9?.text,
+            text: process?.paragraph4?.text,
+            icon: Hammer,
+            label: process?.heading8?.text,
+        },
+        {
+            number: '04',
+            title: process?.heading11?.text,
+            text: process?.paragraph5?.text,
+            icon: KeyRound,
+            label: process?.heading10?.text,
+        },
+    ]
     return (
         <section
             id="process"
@@ -86,26 +109,24 @@ export function ProcessSection() {
                         </p>
 
                         <h2 className="max-w-3xl font-serif text-4xl leading-[1.12] sm:text-6xl">
-                            From first ideas to
+                            {process?.heading1?.text}
                             <br />
                             <em className="font-normal text-[#e87928]">
-                                beautifully finished.
+                                {process?.heading2?.text}
                             </em>
                         </h2>
                     </div>
 
                     <div className="lg:pb-2">
                         <p className="max-w-md text-base leading-8 text-[#343536]/65">
-                            A great renovation is about more than the final result. It is
-                            about feeling confident throughout the journey. Our thoughtful
-                            process keeps things clear from day one.
+                            {process?.paragraph1?.text}
                         </p>
 
                         <div className="mt-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] text-[#343536]/70">
                             <span className="flex size-8 items-center justify-center rounded-full bg-[#e87928]/10 text-[#e87928]">
                                 <Sparkles size={15} />
                             </span>
-                            Thoughtful from start to finish
+                            {process?.heading3?.text}
                         </div>
                     </div>
                 </div>
@@ -174,10 +195,10 @@ export function ProcessSection() {
                 <div className="mt-12 flex flex-col gap-6 border-t border-[#343536]/15 pt-7 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <p className="font-serif text-2xl text-[#343536]">
-                            Every great space starts somewhere.
+                            {process?.paragraph6?.text}
                         </p>
                         <p className="mt-2 text-sm text-[#343536]/60">
-                            Let’s start with your ideas.
+                            {process?.paragraph7?.text}
                         </p>
                     </div>
 
