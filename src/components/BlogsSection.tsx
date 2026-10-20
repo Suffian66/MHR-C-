@@ -2,10 +2,18 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { blogPosts } from '../data/blogData';
+import { useContent } from '../adminPanel/features/contentContext';
+import { useEffect } from 'react';
 
 export function BlogPreview() {
   const recentPosts = [...blogPosts].slice(0, 3);
 
+  const slug = "home";
+  const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+  useEffect(() => {
+    loadSectionsBySlug(slug);
+  }, [slug]);
   const getExcerpt = (text: string, maxWords = 30) => {
     const words = text.trim().split(/\s+/);
 
@@ -13,6 +21,16 @@ export function BlogPreview() {
 
     return `${words.slice(0, maxWords).join(' ')}...`;
   };
+
+  if (loading && !sectionsBySlug[slug]) {
+    return (
+      <div className="flex items-center justify-center h-screen w-full">
+        <p className="text-xl font-bold">Loading...</p>
+      </div>
+    );
+  }
+
+  const blogs = sectionsBySlug[slug]?.["Blogs"]?.blocks;
 
   return (
     <section className="bg-[#f7f6f2] px-5 py-20 text-[#343536] sm:px-8 sm:py-24 lg:py-28">
@@ -23,21 +41,20 @@ export function BlogPreview() {
           <div>
             <p className="mb-4 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#e87928] sm:text-xs">
               <span className="h-px w-8 bg-[#e87928]" />
-              From Our Blogs
+              {blogs?.heading1?.text}
             </p>
 
             <h2 className="max-w-2xl font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">
-              Ideas for a{' '}
+              {blogs?.heading2?.text}{' '}
               <span className="font-normal italic text-[#e87928]">
-                better home.
+                {blogs?.heading3?.text}
               </span>
             </h2>
           </div>
 
           <div className="flex flex-col gap-4 sm:items-end">
             <p className="max-w-sm text-sm leading-7 text-[#343536]/65 sm:text-right">
-              Renovation advice, thoughtful design ideas,
-              and practical inspiration for your space.
+              {blogs?.paragraph1?.text}
             </p>
 
             <Link

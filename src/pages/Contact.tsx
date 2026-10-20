@@ -1,17 +1,40 @@
 
 import { Mail, MapPin, Phone, ArrowRight } from 'lucide-react'
-import { type FormEvent } from 'react'
+import { useEffect, type FormEvent } from 'react'
 import { Footer } from '../components/footer'
 import { Header } from '../components/header'
 import { PageHero } from '../components/pagesHero'
 import { Cta } from '../components/pagesCta'
 import Topbar from '../components/topbar'
+import { useContent } from '../adminPanel/features/contentContext'
 
 export default function Contact() {
+    const slug = "contact";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const banner = sectionsBySlug[slug]?.["Banner"]?.blocks;
+    const info = sectionsBySlug[slug]?.["Information"]?.blocks;
+    const form = sectionsBySlug[slug]?.["Form"]?.blocks;
+    const cta = sectionsBySlug[slug]?.["CTA"]?.blocks;
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         alert('Thank you! Your enquiry form is ready to be connected.')
     }
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
 
     return (
         <main className="bg-[#f7f6f2] text-[#343536]">
@@ -20,11 +43,11 @@ export default function Contact() {
 
             {/* Shared hero component */}
             <PageHero
-                eyebrow="START A CONVERSATION"
-                title="Let's make room for"
-                highlight="better."
-                description="Have a renovation in mind? Tell us what you're dreaming of, and let's talk about how we can bring it to life."
-                image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=85"
+                eyebrow={banner?.heading1?.text}
+                title={banner?.heading2?.text}
+                highlight={banner?.heading3?.text}
+                description={banner?.paragraph1?.text}
+                image={getUrl(banner?.image1?.imageId) || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=85"}
                 imageAlt="Beautifully renovated contemporary living space"
                 breadcrumb="Contact"
             // ctaText="Tell us about your project"
@@ -41,18 +64,15 @@ export default function Contact() {
                     {/* Contact details */}
                     <div className="lg:py-5">
                         <p className="text-xs font-bold uppercase tracking-[0.22em] text-[#e87928]">
-                            We'd love to hear from you
+                            {info?.heading1?.text}
                         </p>
 
                         <h2 className="mt-4 max-w-lg font-serif text-4xl leading-tight sm:text-5xl">
-                            Every great space starts with a conversation.
+                            {info?.paragraph1?.text}
                         </h2>
 
                         <p className="mt-6 max-w-md text-base leading-8 text-[#343536]/65">
-                            Tell us a little about your project. Whether you're
-                            planning a kitchen update or a complete home
-                            transformation, we're here to help you take the
-                            next step.
+                            {info?.paragraph2?.text}
                         </p>
 
                         <div className="mt-10 space-y-6">
@@ -64,10 +84,10 @@ export default function Contact() {
                                 </span>
                                 <span className="pt-1">
                                     <span className="block text-xs font-bold uppercase tracking-widest text-[#343536]/50">
-                                        Give us a call
+                                        {info?.heading2?.text}
                                     </span>
                                     <span className="mt-1 block text-sm font-medium transition-colors group-hover:text-[#e87928]">
-                                        (289) 855-5559
+                                        {info?.heading3?.text}
                                     </span>
                                 </span>
                             </p>
@@ -80,10 +100,10 @@ export default function Contact() {
                                 </span>
                                 <span className="min-w-0 pt-1">
                                     <span className="block text-xs font-bold uppercase tracking-widest text-[#343536]/50">
-                                        Send us an email
+                                        {info?.heading4?.text}
                                     </span>
                                     <span className="mt-1 block break-all text-sm font-medium transition-colors group-hover:text-[#e87928]">
-                                        magichammerrenovations@gmail.com
+                                        {info?.heading5?.text}
                                     </span>
                                 </span>
                             </p>
@@ -94,10 +114,10 @@ export default function Contact() {
                                 </span>
                                 <span className="pt-1">
                                     <span className="block text-xs font-bold uppercase tracking-widest text-[#343536]/50">
-                                        Our service area
+                                        {info?.heading6?.text}
                                     </span>
                                     <span className="mt-1 block text-sm font-medium">
-                                        Ontario, Canada
+                                        {info?.heading7?.text}
                                     </span>
                                 </span>
                             </div>
@@ -105,7 +125,7 @@ export default function Contact() {
 
                         <div className="mt-10 border-l-2 border-[#e87928] pl-5">
                             <p className="font-serif text-xl italic text-[#343536]/80">
-                                "Your vision. Our craftsmanship. A space that feels like you."
+                                {info?.paragraph3?.text}
                             </p>
                         </div>
                     </div>
@@ -117,13 +137,13 @@ export default function Contact() {
                     >
                         <div className="mb-8 border-b border-[#343536]/10 pb-6">
                             <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e87928]">
-                                Your project starts here
+                                {form?.heading1?.text}
                             </p>
                             <h2 className="mt-3 font-serif text-3xl sm:text-4xl">
-                                Tell us about it.
+                                {form?.heading2?.text}
                             </h2>
                             <p className="mt-3 text-sm leading-6 text-[#343536]/60">
-                                Fill in the details below and we'll be in touch.
+                                {form?.paragraph1?.text}
                             </p>
                         </div>
 
@@ -219,8 +239,7 @@ export default function Contact() {
                         </button>
 
                         <p className="mt-4 text-xs leading-5 text-[#343536]/50">
-                            No pressure, no obligation — just a conversation
-                            about your project.
+                            {form?.paragraph2?.text}
                         </p>
                     </form>
                 </div>
@@ -228,9 +247,9 @@ export default function Contact() {
 
             {/* Shared CTA with Contact-specific copy */}
             <Cta
-                eyebrow="READY WHEN YOU ARE"
-                title="Let's bring your vision to life."
-                description="Have questions or still exploring ideas? Let's talk about your space, your plans, and what we can create together."
+                eyebrow={cta?.heading1?.text}
+                title={cta?.heading2?.text}
+                description={cta?.paragraph1?.text}
                 buttonText="Explore our services"
                 buttonLink="/#services"
             />

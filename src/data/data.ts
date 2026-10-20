@@ -65,54 +65,7 @@ export function getServiceData(services: any, getUrl: (imageId?: string) => stri
   ];
 };
 
-export const projects = [
-  {
-    title: 'Blue Holly Crescent',
-    category: 'Complete Renovation of Bathroom & Laundry',
-    description:
-      'A thoughtful bathroom and laundry renovation combining clean lines, modern finishes and practical storage to create functional, stylish spaces for everyday living.',
-    images: [
-      '/images/project-bhc/bathroom.JPG',
-      '/images/project-bhc/bathroom-4.JPG',
-      '/images/project-bhc/bathroom-2.JPG',
-      '/images/project-bhc/shower.JPG',
-      '/images/project-bhc/cabinet.jpg',
-      '/images/project-bhc/laundry.JPG',
-      '/images/project-bhc/laundry-2.jpg',
-    ],
-  },
-  {
-    title: 'Absolute Avenue',
-    category: 'Complete Home Renovation',
-    description:
-      'A complete home renovation combining thoughtful design, quality finishes and modern functionality to create a cohesive, comfortable and timeless living space.',
-    images: [
-      '/images/project-aa/kitchen.jpg',
-      '/images/project-aa/hall.jpg',
-      '/images/project-aa/hall-2.jpg',
-      '/images/project-aa/bedroom.png',
-      '/images/project-aa/bathroom.jpg',
-      '/images/project-aa/bathroom-2.jpg',
-      '/images/project-aa/bathroom-3.jpg',
-    ],
-  },
-  {
-    title: 'Redstone Crescent',
-    category: 'Complete Renovation',
-    description:
-      'A thoughtful renovation combining clean lines, modern finishes and practical storage to create functional, stylish spaces for everyday living.',
-    images: [
-      '/images/project-rsc/kitchen4.JPEG',
-      '/images/project-rsc/kitchen3.jpeg',
-      '/images/project-rsc/bathroom.jpeg',
-      '/images/project-rsc/bathroom2.jpeg',
-      '/images/project-rsc/bathroom6.jpeg',
-      '/images/project-rsc/sitting-area.jpeg',
-      '/images/project-rsc/staircase.jpeg',
-    ],
-  },
 
-]
 
 
 export const navItems: NavItem[] = [

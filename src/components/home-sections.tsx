@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight, Mail, MapPin, MoveUpRight, Phone, Quote, Star } from 'lucide-react';
 import { ServiceSlider } from './service-slider';
-import { projects } from '../data/data';
 import { useEffect, useState } from 'react';
 import { useContent } from '../adminPanel/features/contentContext';
 export function ServicesSection() {
@@ -55,6 +54,20 @@ export function FeaturedProjects() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [previousIndex, setPreviousIndex] = useState<number | null>(null)
 
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+
+
+    const projectsData = sectionsBySlug[slug]?.["Projects"]?.blocks;
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
     useEffect(() => {
         if (projects.length < 2) return
 
@@ -84,6 +97,53 @@ export function FeaturedProjects() {
         setPreviousIndex(activeIndex)
         setActiveIndex(index)
     }
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const projects = [
+        {
+            title: projectsData?.heading5?.text,
+            category: projectsData?.heading4?.text,
+            description: projectsData?.paragraph1?.text,
+            images: [
+                getUrl(projectsData?.image1?.imageId) || '/images/project-bhc/bathroom.JPG',
+                getUrl(projectsData?.image2?.imageId) || '/images/project-bhc/bathroom-4.JPG',
+                getUrl(projectsData?.image3?.imageId) || '/images/project-bhc/bathroom-2.JPG',
+                getUrl(projectsData?.image4?.imageId) || '/images/project-bhc/shower.JPG',
+                getUrl(projectsData?.image5?.imageId) || '/images/project-bhc/cabinet.jpg',
+            ],
+        },
+        {
+            title: projectsData?.heading7?.text,
+            category: projectsData?.heading6?.text,
+            description: projectsData?.paragraph2?.text,
+            images: [
+                getUrl(projectsData?.image6?.imageId) || '/images/project-aa/kitchen.jpg',
+                getUrl(projectsData?.image7?.imageId) || '/images/project-aa/hall.jpg',
+                getUrl(projectsData?.image8?.imageId) || '/images/project-aa/hall-2.jpg',
+                getUrl(projectsData?.image9?.imageId) || '/images/project-aa/bedroom.png',
+                getUrl(projectsData?.image10?.imageId) || '/images/project-aa/bathroom.jpg',
+            ],
+        },
+        {
+            title: projectsData?.heading9?.text,
+            category: projectsData?.heading8?.text,
+            description: projectsData?.paragraph3?.text,
+            images: [
+                getUrl(projectsData?.image11?.imageId) || '/images/project-rsc/kitchen4.JPEG',
+                getUrl(projectsData?.image12?.imageId) || '/images/project-rsc/kitchen3.jpeg',
+                getUrl(projectsData?.image13?.imageId) || '/images/project-rsc/bathroom.jpeg',
+                getUrl(projectsData?.image14?.imageId) || '/images/project-rsc/bathroom2.jpeg',
+                getUrl(projectsData?.image15?.imageId) || '/images/project-rsc/bathroom6.jpeg',
+            ],
+        },
+    ]
 
     const project = projects[activeIndex]
 
@@ -131,13 +191,13 @@ export function FeaturedProjects() {
                     <div>
                         <p className="mb-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.28em]">
                             <span className="h-px w-10 bg-[#343536]/60" />
-                            A selection of our work
+                            {projectsData?.heading1?.text}
                         </p>
 
                         <h2 className="max-w-4xl font-serif text-4xl leading-[1.08] sm:text-6xl lg:text-6xl">
-                            Spaces made
+                            {projectsData?.heading2?.text}
                             {/* <br /> */}
-                            <span className="font-normal text-white lg:text-7xl ps-2">to tell a story.</span>
+                            <span className="font-normal text-white lg:text-7xl ps-2">{projectsData?.heading3?.text}</span>
                         </h2>
                     </div>
 
@@ -179,7 +239,7 @@ export function FeaturedProjects() {
 
                         <div className="mt-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em]">
                             <ArrowDownRight size={19} />
-                            Thoughtful design. Considered details.
+                            {projectsData?.heading10?.text}
                         </div>
 
                         {/* Project selectors */}
@@ -330,14 +390,14 @@ export function FeaturedProjects() {
                 {/* Bottom statement */}
                 <div className="mt-12 flex flex-col gap-4 border-t border-[#343536]/25 pt-6 sm:mt-16 sm:flex-row sm:items-center sm:justify-between">
                     <p className="max-w-xl font-serif text-xl sm:text-2xl">
-                        Every detail matters. Every space has potential.
+                        {projectsData?.heading11?.text}
                     </p>
 
                     <Link
                         to="/contact"
                         className="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.16em] transition-colors hover:text-white"
                     >
-                        Start your renovation
+                        {projectsData?.heading12?.text}
                         <MoveUpRight
                             size={17}
                             className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -486,13 +546,30 @@ export default AboutPreview
 
 
 export function Testimonials() {
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const testimonialsData = sectionsBySlug[slug]?.["Testimonials"]?.blocks;
+
     const testimonials = [
-        'The whole process felt calm and considered. We love how our home works now.',
-        'MHR brought ideas we had not thought of and delivered every detail beautifully.',
-        'Clear communication, excellent workmanship, and a team we would recommend to anyone.',
+        testimonialsData?.paragraph2?.text,
+        testimonialsData?.paragraph3?.text,
+        testimonialsData?.paragraph4?.text,
     ];
 
-    const names = ['Sarah & James', 'Mia Thompson', 'The Wilson family'];
+    const names = [testimonialsData?.heading4?.text, testimonialsData?.heading5?.text, testimonialsData?.heading6?.text,];
 
     return (
         <section className="bg-[#eeeae1] px-5 py-16 text-[#343536] sm:px-8 sm:py-20">
@@ -501,18 +578,17 @@ export function Testimonials() {
                     <div>
                         <p className="mb-3 flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#e87928]">
                             <span className="h-px w-6 bg-[#e87928]" />
-                            Client experiences
+                            {testimonialsData?.heading1?.text}
                         </p>
 
                         <h2 className="font-serif text-3xl leading-tight sm:text-4xl">
-                            Trusted by homeowners.
-                            <span className="text-[#e87928]"> Proven by our work.</span>
+                            {testimonialsData?.heading2?.text}
+                            <span className="text-[#e87928]">{testimonialsData?.heading3?.text}</span>
                         </h2>
                     </div>
 
                     <p className="max-w-sm text-sm leading-6 text-[#343536]/60">
-                        Great renovations start with trust. Here's what our
-                        clients say about working with MHR.
+                        {testimonialsData?.paragraph1?.text}
                     </p>
                 </div>
 
@@ -574,7 +650,7 @@ export function Testimonials() {
                                             : 'bg-[#e87928]/10 text-[#e87928]'
                                             }`}
                                     >
-                                        {names[index].charAt(0)}
+                                        {names[index]?.trim()?.charAt(0) || 'C'}
                                     </div>
 
                                     <div>
@@ -607,11 +683,11 @@ export function Testimonials() {
 
                 <div className="mt-6 flex flex-col gap-2 border-t border-[#343536]/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm font-medium">
-                        Your vision. Our craftsmanship.
+                        {testimonialsData?.heading7?.text}
                     </p>
 
                     <p className="text-xs text-[#343536]/50">
-                        Every detail matters. Every client matters.
+                        {testimonialsData?.heading8?.text}
                     </p>
                 </div>
             </div>
@@ -619,6 +695,23 @@ export function Testimonials() {
     );
 }
 export function ContactCta() {
+    const slug = "home";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const cta = sectionsBySlug[slug]?.["CTA"]?.blocks;
+
     return (
         <section className="relative isolate overflow-hidden bg-[#e87928] px-6 py-24 text-white sm:py-32">
 
@@ -641,16 +734,15 @@ export function ContactCta() {
             <div className="relative z-10 mx-auto grid max-w-7xl gap-14 lg:grid-cols-[1fr_.8fr] lg:items-end">
                 <div>
                     <p className="mb-5 text-xs font-bold uppercase tracking-[0.28em] text-white/70">
-                        Let&apos;s talk
+                        {cta?.heading1?.text}
                     </p>
 
                     <h2 className="max-w-2xl font-serif text-5xl leading-none sm:text-7xl">
-                        Ready to make a change?
+                        {cta?.heading2?.text}
                     </h2>
 
                     <p className="mt-8 max-w-md text-lg leading-8 text-white/80">
-                        Tell us a little about your project and we&apos;ll be in touch for
-                        a relaxed, no-obligation chat.
+                        {cta?.paragraph1?.text}
                     </p>
                 </div>
 
@@ -658,17 +750,17 @@ export function ContactCta() {
                     <p
                         className="flex items-center gap-4 border-b border-white/30 pb-5"
                     >
-                        <Phone /> (289) 855-5559
+                        <Phone /> {cta?.heading3?.text}
                     </p>
 
                     <p
                         className="flex items-center gap-4 border-b border-white/30 pb-5"
                     >
-                        <Mail /> magichammerrenovations@gmail.com
+                        <Mail /> {cta?.heading4?.text}
                     </p>
 
                     <p className="flex items-center gap-4">
-                        <MapPin /> Oakville, ON
+                        <MapPin /> {cta?.heading5?.text}
                     </p>
 
                     <Link

@@ -13,50 +13,71 @@ import { Footer } from '../components/footer';
 import { PageHero } from '../components/pagesHero';
 import { Cta } from '../components/pagesCta';
 import Topbar from '../components/topbar';
+import { useContent } from '../adminPanel/features/contentContext';
+import { useEffect } from 'react';
 
 export default function AboutUs() {
+    const slug = "about";
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const banner = sectionsBySlug[slug]?.["Banner"]?.blocks;
+    const story = sectionsBySlug[slug]?.["Our Story"]?.blocks;
+    const mission = sectionsBySlug[slug]?.["Mission"]?.blocks;
+    const valuesData = sectionsBySlug[slug]?.["Values"]?.blocks;
+    const process = sectionsBySlug[slug]?.["How we work"]?.blocks;
+    const cta = sectionsBySlug[slug]?.["CTA"]?.blocks;
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
     const values = [
         {
             number: '01',
             icon: HeartHandshake,
-            title: 'People come first',
-            description:
-                'Every home has a story. We listen carefully, understand your priorities, and shape our work around the way you want to live.',
+            title: valuesData?.heading4?.text,
+            description: valuesData?.paragraph2?.text,
         },
         {
             number: '02',
             icon: Ruler,
-            title: 'Craft in every detail',
-            description:
-                'Thoughtful planning, considered materials, and attention to the finishing touches help turn good spaces into exceptional ones.',
+            title: valuesData?.heading5?.text,
+            description: valuesData?.paragraph3?.text,
         },
         {
             number: '03',
             icon: Lightbulb,
-            title: 'Ideas with purpose',
-            description:
-                'We look beyond appearances to create spaces that feel beautiful, function better, and make everyday living easier.',
+            title: valuesData?.heading6?.text,
+            description: valuesData?.paragraph4?.text,
         },
     ];
 
     const steps = [
         {
             number: '01',
-            title: 'Listen & understand',
-            description:
-                'We start with your vision, your needs, your space, and the details that matter most to you.',
+            title: process?.heading3?.text,
+            description: process?.paragraph2?.text,
         },
         {
             number: '02',
-            title: 'Plan with purpose',
-            description:
-                'We bring the ideas together into a considered approach, with clear priorities and thoughtful decisions.',
+            title: process?.heading4?.text,
+            description: process?.paragraph3?.text,
         },
         {
             number: '03',
-            title: 'Bring it to life',
-            description:
-                'We focus on workmanship, attention to detail, and delivering a finished space you can feel proud of.',
+            title: process?.heading5?.text,
+            description: process?.paragraph4?.text,
         },
     ];
 
@@ -67,11 +88,11 @@ export default function AboutUs() {
 
             {/* Universal inner-page hero */}
             <PageHero
-                eyebrow="A little about MHR"
-                title="Renovating with"
-                highlight="heart."
-                description="We believe a great renovation is about more than changing a space. It is about understanding the people who live in it and creating something that feels right for them."
-                image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
+                eyebrow={banner?.heading1?.text}
+                title={banner?.heading2?.text}
+                highlight={banner?.heading3?.text}
+                description={banner?.paragraph1?.text}
+                image={getUrl(banner?.image1?.imageId) || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"}
                 imageAlt="Warm, contemporary living room with carefully considered interior details"
                 breadcrumb="About Us"
                 ctaText="Discover our story"
@@ -90,7 +111,7 @@ export default function AboutUs() {
 
                         <div className="relative aspect-[4/4.5] overflow-hidden">
                             <img
-                                src="/images/project-rsc/sitting-area.png"
+                                src={getUrl(story?.image1?.imageId) || "/images/project-rsc/sitting-area.png"}
                                 alt="Bright renovated interior with warm materials and natural light"
                                 loading="lazy"
                                 className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
@@ -99,12 +120,12 @@ export default function AboutUs() {
 
                         <div className="absolute -bottom-1 right-0 max-w-[220px] bg-[#e87928] p-5 text-white sm:max-w-[260px] sm:p-7">
                             <p className="font-serif text-2xl leading-tight sm:text-3xl">
-                                Better spaces.
+                                {story?.heading7?.text}
                                 <br />
-                                Better living.
+                                {story?.heading8?.text}
                             </p>
                             <p className="mt-3 text-[9px] uppercase tracking-[0.2em] text-white/75">
-                                The reason behind our work
+                                {story?.heading9?.text}
                             </p>
                         </div>
                     </div>
@@ -113,37 +134,29 @@ export default function AboutUs() {
                     <div className="lg:py-8">
                         <p className="mb-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#e87928] sm:text-xs">
                             <span className="h-px w-7 bg-[#e87928]" />
-                            Our story
+                            {story?.heading1?.text}
                         </p>
 
                         <h2 className="max-w-xl font-serif text-4xl leading-[1.12] tracking-tight sm:text-5xl lg:text-6xl">
-                            More than a renovation.
+                            {story?.heading2?.text}
                             <span className="mt-1 block font-normal italic text-[#e87928]">
-                                A better way to live.
+                                {story?.heading3?.text}
                             </span>
                         </h2>
 
                         <p className="mt-7 text-base leading-8 text-[#343536]/70">
-                            At MHR Renovations &amp; Contractors, we see every
-                            project as an opportunity to make everyday life
-                            better. A home should reflect the people who live
-                            in it, support their routines, and feel right long
-                            after the work is complete.
+                            {story?.paragraph1?.text}
                         </p>
 
                         <p className="mt-5 text-sm leading-7 text-[#343536]/60">
-                            That is why we believe the best results begin with
-                            listening. Understanding your ideas, respecting
-                            your space, and paying attention to the details
-                            help us approach each renovation with care and
-                            purpose.
+                            {story?.paragraph2?.text}
                         </p>
 
                         <div className="mt-8 space-y-4">
                             {[
-                                'Thoughtful planning from the start',
-                                'A personal approach to every space',
-                                'Quality and care in the details',
+                                story?.heading4?.text,
+                                story?.heading5?.text,
+                                story?.heading6?.text,
                             ].map((item) => (
                                 <div
                                     key={item}
@@ -171,7 +184,7 @@ export default function AboutUs() {
                     className="pointer-events-none absolute inset-0 -z-20 bg-cover bg-center"
                     style={{
                         backgroundImage:
-                            "url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=85')",
+                            getUrl(mission?.image1?.imageId) || "url('https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=2200&q=85')",
                     }}
                 />
 
@@ -193,13 +206,13 @@ export default function AboutUs() {
                     <div className="mb-12 max-w-2xl">
                         <p className="mb-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#f19a53] sm:text-xs">
                             <span className="h-px w-7 bg-[#f19a53]" />
-                            What guides us
+                            {mission?.heading1?.text}
                         </p>
 
                         <h2 className="font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-                            A clear purpose.
+                            {mission?.heading2?.text}
                             <span className="text-[#f19a53]">
-                                {" "}A lasting impact.
+                                {" "}{mission?.heading3?.text}
                             </span>
                         </h2>
                     </div>
@@ -215,15 +228,15 @@ export default function AboutUs() {
                             />
 
                             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f19a53]">
-                                Our mission
+                                {mission?.heading4?.text}
                             </span>
 
                             <h3 className="mt-7 max-w-md font-serif text-3xl leading-snug sm:text-4xl">
-                                To make renovation a more thoughtful, collaborative, and rewarding experience.
+                                {mission?.paragraph1?.text}
                             </h3>
 
                             <p className="mt-6 max-w-md text-sm leading-7 text-white/70">
-                                We aim to bring clarity to the process, understand what matters to each client, and approach every detail with care.
+                                {mission?.paragraph2?.text}
                             </p>
 
                             <span
@@ -246,15 +259,15 @@ export default function AboutUs() {
                             />
 
                             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
-                                Our vision
+                                {mission?.heading5?.text}
                             </span>
 
                             <h3 className="mt-7 max-w-md font-serif text-3xl leading-snug sm:text-4xl">
-                                Spaces that feel better today and serve people well into the future.
+                                {mission?.paragraph3?.text}
                             </h3>
 
                             <p className="mt-6 max-w-md text-sm leading-7 text-white/90">
-                                We want to help create homes that balance lasting appeal, everyday functionality, and the individual character of the people who live in them.
+                                {mission?.paragraph4?.text}
                             </p>
 
                             <span
@@ -274,21 +287,19 @@ export default function AboutUs() {
                         <div>
                             <p className="mb-5 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[#e87928] sm:text-xs">
                                 <span className="h-px w-7 bg-[#e87928]" />
-                                What matters to us
+                                {valuesData?.heading1?.text}
                             </p>
 
                             <h2 className="max-w-2xl font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-                                The values behind
+                                {valuesData?.heading2?.text}
                                 <span className="text-[#e87928]">
-                                    {' '}every detail.
+                                    {' '} {valuesData?.heading3?.text}
                                 </span>
                             </h2>
                         </div>
 
                         <p className="max-w-sm text-sm leading-7 text-[#343536]/60">
-                            Our approach is built around people, purposeful
-                            design, and the belief that the smallest details
-                            can make a meaningful difference.
+                            {valuesData?.paragraph1?.text}
                         </p>
                     </div>
 
@@ -337,17 +348,14 @@ export default function AboutUs() {
                         </p>
 
                         <h2 className="font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-                            Good work starts with
+                            {process?.heading1?.text}
                             <span className="text-[#e87928]">
-                                {' '}good understanding.
+                                {' '}{process?.heading2?.text}
                             </span>
                         </h2>
 
                         <p className="mt-6 max-w-md text-sm leading-7 text-[#343536]/65">
-                            A considered process helps bring your ideas,
-                            practical needs, and design ambitions together.
-                            We believe every successful transformation begins
-                            with a conversation.
+                            {process?.paragraph1?.text}
                         </p>
 
                         <Link
@@ -385,9 +393,9 @@ export default function AboutUs() {
             </section>
 
             <Cta
-                eyebrow="YOUR NEXT PROJECT"
-                title="Let's build something exceptional."
-                description="From thoughtful updates to complete renovations, let's discuss your ideas."
+                eyebrow={cta?.heading1?.text}
+                title={cta?.heading2?.text}
+                description={cta?.paragraph1?.text}
                 buttonText="Start your project"
                 buttonLink='/contact'
             />

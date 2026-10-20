@@ -1,24 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { portfolioProjects } from "../data/portfolioData";
 import { PageHero } from "../components/pagesHero";
 import { Header } from "../components/header";
 import Footer from "../components/footer";
 import { Cta } from "../components/pagesCta";
 import Topbar from "../components/topbar";
+import { useContent } from "../adminPanel/features/contentContext";
 
-const categories = [
-    "All Projects",
-    "Kitchens",
-    "Bathrooms",
-    "Basements",
-    "Blinds / Window Coverings",
-    "Drywall",
-    "Home Staging",
-];
+
 
 export default function PortfolioPage() {
+    const slug = "portfolio";
     const [activeCategory, setActiveCategory] = useState("All Projects");
+    const { sectionsBySlug, loadSectionsBySlug, loading, media } = useContent();
+
+    useEffect(() => {
+        loadSectionsBySlug(slug);
+    }, [slug]);
+
+    if (loading && !sectionsBySlug[slug]) {
+        return (
+            <div className="flex items-center justify-center h-screen w-full">
+                <p className="text-xl font-bold">Loading...</p>
+            </div>
+        );
+    }
+
+    const banner = sectionsBySlug[slug]?.["Banner"]?.blocks;
+    const projects = sectionsBySlug[slug]?.["Projects"]?.blocks;
+    const projectSection = sectionsBySlug[slug]?.["Project Section "]?.blocks;
+
+    const categories = [
+        "All Projects",
+        projectSection?.heading3?.text,
+        projectSection?.heading4?.text,
+        projectSection?.heading5?.text,
+        projectSection?.heading6?.text,
+        projectSection?.heading7?.text,
+        projectSection?.heading8?.text,
+    ].filter((category): category is string => Boolean(category?.trim()));
+
+    const portfolioProjects = [
+        {
+            id: 1,
+            title: projects?.heading2?.text,
+            category: projects?.heading1?.text,
+            location: projects?.heading3?.text,
+            description: projects?.paragraph1?.text,
+            cover: projects?.image1?.imageId || "/images/project-aa/kitchen.jpg",
+            images: [
+                projects?.image2?.imageId || "/images/project-aa/hall-2.jpg",
+                projects?.image3?.imageId || "/images/kitchen.png",
+            ],
+        },
+        {
+            id: 2,
+            title: projects?.heading5?.text,
+            category: projects?.heading4?.text,
+            location: projects?.heading6?.text,
+            description: projects?.paragraph2?.text,
+            cover: projects?.image4?.imageId || "/images/project-aa/bathroom.jpg",
+            images: [
+                projects?.image5?.imageId || "/images/project-aa/bathroom-4.jpg",
+                projects?.image6?.imageId || "/images/project-aa/bathroom-3.jpg",
+            ],
+        },
+        {
+            id: 3,
+            title: projects?.heading8?.text,
+            category: projects?.heading7?.text,
+            location: projects?.heading9?.text,
+            description: projects?.paragraph3?.text,
+            cover: projects?.image7?.imageId || "/images/project-bhc/bathroom.JPG",
+            images: [
+                projects?.image8?.imageId || "/images/project-bhc/bathroom-2.JPG",
+                projects?.image9?.imageId || "/images/project-bhc/shower.JPG",
+            ],
+        },
+    ];
+
 
     const filteredProjects =
         activeCategory === "All Projects"
@@ -26,6 +86,9 @@ export default function PortfolioPage() {
             : portfolioProjects.filter(
                 (project) => project.category === activeCategory
             );
+
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
 
     return (
         <>
@@ -36,11 +99,11 @@ export default function PortfolioPage() {
             <main>
                 {/* HERO */}
                 <PageHero
-                    eyebrow="Our Selected Work"
-                    title="Spaces transformed."
-                    highlight="Living reimagined."
-                    description="Explore our renovation projects, thoughtful details, and craftsmanship. From kitchens and bathrooms to complete interior transformations, every space reflects our commitment to quality and functionality."
-                    image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
+                    eyebrow={banner?.heading1?.text}
+                    title={banner?.heading2?.text}
+                    highlight={banner?.heading3?.text}
+                    description={banner?.paragraph1?.text}
+                    image={getUrl(banner?.image1?.imageId) || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"}
                     imageAlt="Beautifully renovated contemporary interior with elegant finishes"
                     breadcrumb="Portfolio"
                     ctaText="Explore our projects"
@@ -57,17 +120,16 @@ export default function PortfolioPage() {
                         <div className="mb-10 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
                             <div>
                                 <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-[#e87928]">
-                                    A Closer Look
+                                    {projectSection?.heading1?.text}
                                 </p>
 
                                 <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl">
-                                    Work worth exploring.
+                                    {projectSection?.heading2?.text}
                                 </h2>
                             </div>
 
                             <p className="max-w-md text-sm leading-7 text-[#343536]/65">
-                                Discover the spaces, finishes, and ideas that bring each
-                                project together.
+                                {projectSection?.paragraph1?.text}
                             </p>
                         </div>
 
