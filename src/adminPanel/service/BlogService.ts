@@ -22,6 +22,7 @@ export type BlogItem = {
     id: string;
     title: string;
     slug: string;
+    category: string;
     content: string;
     featuredImage: string;
     status: BlogStatus;
@@ -70,16 +71,22 @@ const checkDuplicateSlug = async (
 
 export const addBlog = async (
     title: string,
+    category: string,
     content: string,
     featuredImage: string,
     status: BlogStatus = "draft"
 ): Promise<string> => {
     const cleanTitle = title.trim();
+    const cleanCategory = category.trim();
     const cleanContent = content.trim();
     const slug = generateBlogSlug(cleanTitle);
 
     if (!cleanTitle || !slug) {
         throw new Error("Please enter a valid blog title.");
+    }
+
+    if (!cleanCategory) {
+        throw new Error("Please select a blog category.");
     }
 
     if (!cleanContent || !cleanContent.replace(/<[^>]*>/g, "").trim()) {
@@ -92,18 +99,16 @@ export const addBlog = async (
         );
     }
 
-    const blogRef = await addDoc(
-        collection(db, BLOGS_COLLECTION),
-        {
-            title: cleanTitle,
-            slug,
-            content: cleanContent,
-            featuredImage: featuredImage.trim(),
-            status,
-            createdAt: serverTimestamp(),
-            updatedAt: serverTimestamp(),
-        }
-    );
+    const blogRef = await addDoc(collection(db, BLOGS_COLLECTION), {
+        title: cleanTitle,
+        slug,
+        category: cleanCategory,
+        content: cleanContent,
+        featuredImage: featuredImage.trim(),
+        status,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+    });
 
     return blogRef.id;
 };
@@ -125,6 +130,7 @@ export const fetchBlogs = async (): Promise<BlogItem[]> => {
                 id: blogDoc.id,
                 title: data.title ?? "",
                 slug: data.slug ?? "",
+                category: data.category ?? "Renovation Tips",
                 content: data.content ?? "",
                 featuredImage: data.featuredImage ?? "",
                 status: data.status === "published" ? "published" : "draft",
@@ -144,7 +150,7 @@ export const updateBlog = async (
     updates: Partial<
         Pick<
             BlogItem,
-            "title" | "content" | "featuredImage" | "status"
+            "title" | "category" | "content" | "featuredImage" | "status"
         >
     >
 ): Promise<void> => {
@@ -166,6 +172,16 @@ export const updateBlog = async (
 
         safeUpdates.title = cleanTitle;
         safeUpdates.slug = slug;
+    }
+
+    if (updates.category !== undefined) {
+        const cleanCategory = updates.category.trim();
+
+        if (!cleanCategory) {
+            throw new Error("Please select a blog category.");
+        }
+
+        safeUpdates.category = cleanCategory;
     }
 
     if (updates.content !== undefined) {

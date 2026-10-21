@@ -40,6 +40,9 @@ export default function PortfolioPage() {
         projectSection?.heading8?.text,
     ].filter((category): category is string => Boolean(category?.trim()));
 
+    const getUrl = (imageId?: string) =>
+        media.find((m) => m.id === imageId)?.mediaUrl || null;
+
     const portfolioProjects = [
         {
             id: 1,
@@ -47,10 +50,10 @@ export default function PortfolioPage() {
             category: projects?.heading1?.text,
             location: projects?.heading3?.text,
             description: projects?.paragraph1?.text,
-            cover: projects?.image1?.imageId || "/images/project-aa/kitchen.jpg",
+            cover: getUrl(projects?.image1?.imageId) || "/images/project-aa/kitchen.jpg",
             images: [
-                projects?.image2?.imageId || "/images/project-aa/hall-2.jpg",
-                projects?.image3?.imageId || "/images/kitchen.png",
+                getUrl(projects?.image2?.imageId) || "/images/project-aa/hall-2.jpg",
+                getUrl(projects?.image3?.imageId) || "/images/kitchen.png",
             ],
         },
         {
@@ -59,10 +62,10 @@ export default function PortfolioPage() {
             category: projects?.heading4?.text,
             location: projects?.heading6?.text,
             description: projects?.paragraph2?.text,
-            cover: projects?.image4?.imageId || "/images/project-aa/bathroom.jpg",
+            cover: getUrl(projects?.image4?.imageId) || "/images/project-aa/bathroom.jpg",
             images: [
-                projects?.image5?.imageId || "/images/project-aa/bathroom-4.jpg",
-                projects?.image6?.imageId || "/images/project-aa/bathroom-3.jpg",
+                getUrl(projects?.image5?.imageId) || "/images/project-aa/bathroom-4.jpg",
+                getUrl(projects?.image6?.imageId) || "/images/project-aa/bathroom-3.jpg",
             ],
         },
         {
@@ -71,10 +74,10 @@ export default function PortfolioPage() {
             category: projects?.heading7?.text,
             location: projects?.heading9?.text,
             description: projects?.paragraph3?.text,
-            cover: projects?.image7?.imageId || "/images/project-bhc/bathroom.JPG",
+            cover: getUrl(projects?.image7?.imageId) || "/images/project-bhc/bathroom.JPG",
             images: [
-                projects?.image8?.imageId || "/images/project-bhc/bathroom-2.JPG",
-                projects?.image9?.imageId || "/images/project-bhc/shower.JPG",
+                getUrl(projects?.image8?.imageId) || "/images/project-bhc/bathroom-2.JPG",
+                getUrl(projects?.image9?.imageId) || "/images/project-bhc/shower.JPG",
             ],
         },
     ];
@@ -87,8 +90,6 @@ export default function PortfolioPage() {
                 (project) => project.category === activeCategory
             );
 
-    const getUrl = (imageId?: string) =>
-        media.find((m) => m.id === imageId)?.mediaUrl || null;
 
     return (
         <>
@@ -103,7 +104,7 @@ export default function PortfolioPage() {
                     title={banner?.heading2?.text}
                     highlight={banner?.heading3?.text}
                     description={banner?.paragraph1?.text}
-                    image={getUrl(banner?.image1?.imageId) || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"}
+                    image={getUrl(banner?.image1?.imageId) || "/images/portfolio.jpg"}
                     imageAlt="Beautifully renovated contemporary interior with elegant finishes"
                     breadcrumb="Portfolio"
                     ctaText="Explore our projects"

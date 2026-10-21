@@ -113,7 +113,7 @@ export default function ServicePage() {
         return <Navigate to="/404" replace />;
     }
 
-    const image = details.heroImages?.[0]?.image || '/images/kitchen.png';
+    const image = details.heroImages?.[0]?.image || '/images/home-staging.jpg';
 
     const intro = sectionsBySlug['services']?.['Intro']?.blocks;
     const detailing = sectionsBySlug['services']?.['Details ']?.blocks;

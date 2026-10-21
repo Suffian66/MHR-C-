@@ -92,7 +92,7 @@ export default function AboutUs() {
                 title={banner?.heading2?.text}
                 highlight={banner?.heading3?.text}
                 description={banner?.paragraph1?.text}
-                image={getUrl(banner?.image1?.imageId) || "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"}
+                image={getUrl(banner?.image1?.imageId) || "/images/about.jpg"}
                 imageAlt="Warm, contemporary living room with carefully considered interior details"
                 breadcrumb="About Us"
                 ctaText="Discover our story"

@@ -21,9 +21,10 @@ export function Footer() {
                 className="pointer-events-none absolute -right-16 -top-16 size-64 rounded-full border border-[#e87928]/15"
             />
 
-            <div className="relative mx-auto max-w-7xl">
+            <div className="relative mx-auto max-w-[1550px] px-2 sm:px-4">
                 {/* Main footer */}
-                <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1.2fr_1fr] lg:gap-10">
+                {/* <div className="grid gap-12 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[1.4fr_0.8fr_1.2fr_1fr] lg:gap-10"> */}
+                <div className="grid gap-10 border-b border-white/10 pb-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.75fr_1fr_1.1fr_0.85fr] lg:gap-10">
                     {/* Brand */}
                     <div>
                         <Link to="/" aria-label="MHR home" className="inline-block">
@@ -66,6 +67,51 @@ export function Footer() {
                                 >
                                     <span className="h-px w-0 bg-[#e87928] transition-all duration-300 group-hover:w-4" />
                                     {item.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </div>
+
+                    {/* Services */}
+                    <div>
+                        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-[#f19a53]">
+                            Our Services
+                        </h3>
+
+                        <nav className="mt-6 flex flex-col items-start gap-4">
+                            {[
+                                {
+                                    label: "Kitchen Renovations",
+                                    href: "/services/kitchen-renovation",
+                                },
+                                {
+                                    label: "Bathroom Renovations",
+                                    href: "/services/bathroom-renovation",
+                                },
+                                {
+                                    label: "Drywall",
+                                    href: "/services/drywall",
+                                },
+                                {
+                                    label: "Home Staging",
+                                    href: "/services/home-staging",
+                                },
+                                {
+                                    label: "Basement Renovations",
+                                    href: "/services/basement-renovation",
+                                },
+                                {
+                                    label: "Blinds & Window Coverings",
+                                    href: "/services/window-covering",
+                                },
+                            ].map((service) => (
+                                <Link
+                                    key={service.href}
+                                    to={service.href}
+                                    className="group flex items-start gap-2 text-sm text-white/65 transition-colors duration-300 hover:text-white"
+                                >
+                                    <span className="mt-2 h-px w-0 shrink-0 bg-[#e87928] transition-all duration-300 group-hover:w-4" />
+                                    <span>{service.label}</span>
                                 </Link>
                             ))}
                         </nav>

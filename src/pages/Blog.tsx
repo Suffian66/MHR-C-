@@ -26,7 +26,7 @@ export default function Blog() {
                 title="The MHR"
                 highlight="Journal"
                 description="Explore renovation advice, thoughtful design ideas, and practical guidance to help you make the most of your space."
-                image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85"
+                image="/images/blogs.jpg"
                 imageAlt="Beautiful contemporary home interior"
                 breadcrumb="Blog"
             />
