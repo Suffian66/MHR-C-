@@ -30,7 +30,7 @@ const NAV_ITEMS: NavItem[] = [
     { label: "Pages", to: "/admin/pages", icon: FaFileAlt },
     { label: "Blog Management", to: "/admin/blogs", icon: FaNewspaper },
     { label: "Media Library", to: "/admin/media", icon: FaFolder },
-    { label: "Add Content", to: "/admin/add-content", icon: FaPlus },
+    // { label: "Add Content", to: "/admin/add-content", icon: FaPlus },
 ];
 
 type SidebarProps = {

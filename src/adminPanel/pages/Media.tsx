@@ -37,8 +37,8 @@ type MediaItem = {
 
 type MediaFilter = "all" | "image" | "video" | "audio" | "other";
 
-const UPLOAD_URL = "https://magichammerrenovations.com/media/upload.php";
-const DELETE_URL = "https://magichammerrenovations.com/media/delete.php";
+const UPLOAD_URL = "https://www.magichammerrenovations.com/media/upload.php";
+const DELETE_URL = "https://www.magichammerrenovations.com/media/delete.php";
 
 const getMediaCategory = (type: string): MediaFilter => {
     if (type.startsWith("image/")) return "image";

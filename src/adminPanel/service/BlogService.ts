@@ -217,3 +217,37 @@ export const deleteBlog = async (
 ): Promise<void> => {
     await deleteDoc(doc(db, BLOGS_COLLECTION, blogId));
 };
+
+export const fetchPublishedBlogs = async (): Promise<BlogItem[]> => {
+    const q = query(
+        collection(db, BLOGS_COLLECTION),
+        where("status", "==", "published")
+    );
+
+    const snapshot = await getDocs(q);
+
+    return snapshot.docs
+        .map((blogDoc) => {
+            const data = blogDoc.data();
+
+            return {
+                id: blogDoc.id,
+                title: data.title ?? "",
+                slug: data.slug ?? "",
+                category: data.category ?? "Renovation Tips",
+                content: data.content ?? "",
+                featuredImage: data.featuredImage ?? "",
+                status: "published" as const,
+                createdAt: data.createdAt,
+                updatedAt: data.updatedAt,
+            };
+        })
+        .sort((a, b) => {
+            const dateA =
+                (a.createdAt as { toMillis?: () => number })?.toMillis?.() ?? 0;
+            const dateB =
+                (b.createdAt as { toMillis?: () => number })?.toMillis?.() ?? 0;
+
+            return dateB - dateA;
+        });
+};
