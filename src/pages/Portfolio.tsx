@@ -6,6 +6,7 @@ import Footer from "../components/footer";
 import { Cta } from "../components/pagesCta";
 import Topbar from "../components/topbar";
 import { useContent } from "../adminPanel/features/contentContext";
+import { Helmet } from "react-helmet-async";
 
 
 
@@ -29,6 +30,13 @@ export default function PortfolioPage() {
     const banner = sectionsBySlug[slug]?.["Banner"]?.blocks;
     const projects = sectionsBySlug[slug]?.["Projects"]?.blocks;
     const projectSection = sectionsBySlug[slug]?.["Project Section "]?.blocks;
+    const meta = sectionsBySlug[slug]?.["Meta"]?.blocks;
+
+    const keywords =
+        (typeof meta?.paragraph2?.text === "string"
+            ? [meta.paragraph2.text]
+            : Array.isArray(meta?.paragraph2?.text) ? meta.paragraph2.text : []
+        ).join(", ");
 
     const categories = [
         "All Projects",
@@ -93,6 +101,29 @@ export default function PortfolioPage() {
 
     return (
         <>
+            <Helmet>
+                {meta?.heading1?.text && (
+                    <title>{meta.heading1.text}</title>
+                )}
+
+                {meta?.paragraph1?.text && (
+                    <meta
+                        name="description"
+                        content={meta.paragraph1.text}
+                    />
+                )}
+
+                {keywords && (
+                    <meta name="keywords" content={keywords} />
+                )}
+
+                {meta?.paragraph3?.text && (
+                    <link
+                        rel="canonical"
+                        href={meta.paragraph3.text}
+                    />
+                )}
+            </Helmet>
             <Topbar />
 
             <Header />

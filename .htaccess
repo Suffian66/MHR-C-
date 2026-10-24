@@ -1,12 +1,30 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteBase /
 
-  # Do not rewrite existing files or directories
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
+#   # Do not rewrite existing files or directories
+#   RewriteCond %{REQUEST_FILENAME} -f [OR]
+#   RewriteCond %{REQUEST_FILENAME} -d
+#   RewriteRule ^ - [L]
 
-  # Send all other routes to React
-  RewriteRule ^ index.html [L]
-</IfModule>
+#   # Send all other routes to React
+#   RewriteRule ^ index.html [L]
+# </IfModule>
+
+
+Options -MultiViews
+RewriteEngine On
+
+# Do not rewrite the SEO controller itself.
+RewriteRule ^seo\.php$ - [L]
+
+# Send the homepage through PHP so it also gets live metadata.
+RewriteRule ^$ seo.php [L,QSA]
+
+# Serve existing assets and files normally.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Send React Router paths through the SEO controller.
+RewriteRule ^ seo.php [L,QSA]

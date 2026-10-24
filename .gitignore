@@ -14,3 +14,12 @@ node_modules
 .next/
 .DS_Store
 MHR&C Build.zip
+
+# Build output
+dist/
+
+# ZIP archives
+*.zip
+
+# TypeScript build cache
+*.tsbuildinfo
