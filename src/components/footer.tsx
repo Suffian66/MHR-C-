@@ -164,7 +164,7 @@ export function Footer() {
                                         Email
                                     </p>
                                     <p className="mt-1 break-all text-sm leading-6 text-white/75">
-                                        magichammerrenovations@gmail.com
+                                        info@magichammerrenovations.com
                                     </p>
                                 </div>
                             </div>

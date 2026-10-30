@@ -512,6 +512,168 @@ export function getServiceDetails(
           },
         ],
       }
+    case 'flooring':
+      return {
+        eyebrow: sections.banner?.heading1?.text,
+        headline: sections.banner?.heading2?.text,
+        highlight: sections.banner?.heading3?.text,
+        description: sections.banner?.paragraph1?.text,
+        introTitle: sections.intro?.heading1?.text,
+        intro: sections?.intro?.paragraph1?.text,
+        statement: sections?.intro?.heading2?.text,
+        features: [
+          {
+            number: '01',
+            title: sections?.details?.heading1?.text,
+            text: sections?.details?.paragraph1?.text,
+          },
+          {
+            number: '02',
+            title: sections?.details?.heading2?.text,
+            text: sections?.details?.paragraph2?.text,
+          },
+          {
+            number: '03',
+            title: sections?.details?.heading3?.text,
+            text: sections?.details?.paragraph3?.text,
+          },
+        ],
+        galleryTitle: sections?.gallery?.heading1?.text,
+        galleryDescription: sections?.gallery?.paragraph1?.text,
+        gallery: [
+          {
+            image: getUrl(sections?.gallery?.image1?.imageId) || '/images/flooring-1.jpg',
+            caption: sections?.gallery?.heading2?.text,
+          },
+          {
+            image: getUrl(sections?.gallery?.image2?.imageId) || '/images/flooring-2.jpg',
+            caption: sections?.gallery?.heading3?.text,
+          },
+          {
+            image: getUrl(sections?.gallery?.image3?.imageId) || '/images/flooring-6.jpg',
+            caption: sections?.gallery?.heading4?.text,
+          },
+
+        ],
+        process: [
+          {
+            title: sections?.process?.heading1?.text,
+            text: sections?.process?.paragraph1?.text,
+          },
+          {
+            title: sections?.process?.heading2?.text,
+            text: sections?.process?.paragraph2?.text,
+          },
+          {
+            title: sections?.process?.heading3?.text,
+            text: sections?.process?.paragraph3?.text,
+          },
+        ],
+        ctaTitle: sections?.cta?.heading1?.text,
+        heroImages: [
+          {
+            image: getUrl(sections.banner?.image1?.imageId) || "/images/flooring-3.jpg",
+            caption: "Modern kitchen renovation",
+          },
+          {
+            image: getUrl(sections.banner?.image2?.imageId) || "/images/flooring-4.jpg",
+            caption: "Custom kitchen cabinetry",
+          },
+          {
+            image: getUrl(sections.banner?.image3?.imageId) || "/images/flooring-5.jpg",
+            caption: "Premium kitchen finishes",
+          },
+          {
+            image: getUrl(sections.banner?.image4?.imageId) || "/images/flooring-6.jpg",
+            caption: "Kitchen island design",
+          },
+          {
+            image: getUrl(sections.banner?.image5?.imageId) || "/images/flooring-7.jpg",
+            caption: "Contemporary kitchen interiors",
+          },
+        ],
+      }
+    case 'painting':
+      return {
+        eyebrow: sections.banner?.heading1?.text,
+        headline: sections.banner?.heading2?.text,
+        highlight: sections.banner?.heading3?.text,
+        description: sections.banner?.paragraph1?.text,
+        introTitle: sections.intro?.heading1?.text,
+        intro: sections?.intro?.paragraph1?.text,
+        statement: sections?.intro?.heading2?.text,
+        features: [
+          {
+            number: '01',
+            title: sections?.details?.heading1?.text,
+            text: sections?.details?.paragraph1?.text,
+          },
+          {
+            number: '02',
+            title: sections?.details?.heading2?.text,
+            text: sections?.details?.paragraph2?.text,
+          },
+          {
+            number: '03',
+            title: sections?.details?.heading3?.text,
+            text: sections?.details?.paragraph3?.text,
+          },
+        ],
+        galleryTitle: sections?.gallery?.heading1?.text,
+        galleryDescription: sections?.gallery?.paragraph1?.text,
+        gallery: [
+          {
+            image: getUrl(sections?.gallery?.image1?.imageId) || '/images/home-1.jpg',
+            caption: sections?.gallery?.heading2?.text,
+          },
+          {
+            image: getUrl(sections?.gallery?.image2?.imageId) || '/images/home-6.jpg',
+            caption: sections?.gallery?.heading3?.text,
+          },
+          {
+            image: getUrl(sections?.gallery?.image3?.imageId) || '/images/home-7.jpg',
+            caption: sections?.gallery?.heading4?.text,
+          },
+
+        ],
+        process: [
+          {
+            title: sections?.process?.heading1?.text,
+            text: sections?.process?.paragraph1?.text,
+          },
+          {
+            title: sections?.process?.heading2?.text,
+            text: sections?.process?.paragraph2?.text,
+          },
+          {
+            title: sections?.process?.heading3?.text,
+            text: sections?.process?.paragraph3?.text,
+          },
+        ],
+        ctaTitle: sections?.cta?.heading1?.text,
+        heroImages: [
+          {
+            image: getUrl(sections.banner?.image1?.imageId) || "/images/home-8.jpg",
+            caption: "Modern kitchen renovation",
+          },
+          {
+            image: getUrl(sections.banner?.image2?.imageId) || "/images/home-2.jpg",
+            caption: "Custom kitchen cabinetry",
+          },
+          {
+            image: getUrl(sections.banner?.image3?.imageId) || "/images/home-3.jpg",
+            caption: "Premium kitchen finishes",
+          },
+          {
+            image: getUrl(sections.banner?.image4?.imageId) || "/images/home-4.jpg",
+            caption: "Kitchen island design",
+          },
+          {
+            image: getUrl(sections.banner?.image5?.imageId) || "/images/home-5.jpg",
+            caption: "Contemporary kitchen interiors",
+          },
+        ],
+      }
     default:
       return null;
   }

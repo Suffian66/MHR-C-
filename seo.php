@@ -227,10 +227,7 @@ function getPageMetadata(string $slug): array
 {
     $projectId = FIREBASE_PROJECT_ID;
 
-    if (
-        $projectId === '' ||
-        $projectId === 'mhrc-43549'
-    ) {
+    if ($projectId === '') {
         throw new RuntimeException('Configure FIREBASE_PROJECT_ID first.');
     }
 

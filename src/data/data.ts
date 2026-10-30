@@ -62,6 +62,20 @@ export function getServiceData(services: any, getUrl: (imageId?: string) => stri
       text: services?.paragraph7?.text,
       image: getUrl(services?.image6?.imageId) || '/images/home-staging.jpg',
     },
+    {
+      slug: 'flooring',
+      number: '07',
+      title: services?.heading9?.text,
+      text: services?.paragraph8?.text,
+      image: getUrl(services?.image7?.imageId) || '/images/home-staging.jpg',
+    },
+    {
+      slug: 'painting',
+      number: '08',
+      title: services?.heading10?.text,
+      text: services?.paragraph9?.text,
+      image: getUrl(services?.image8?.imageId) || '/images/home-staging.jpg',
+    },
   ];
 };
 

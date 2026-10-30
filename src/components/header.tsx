@@ -60,6 +60,20 @@ const services: Service[] = [
         text: 'Present your home at its best with considered styling and detail.',
         image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
     },
+    {
+        slug: 'flooring',
+        number: '07',
+        title: 'Flooring',
+        text: 'Transform every space with beautiful flooring that brings warmth, style, and lasting quality.',
+        image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
+    },
+    {
+        slug: 'painting',
+        number: '08',
+        title: 'Painting',
+        text: 'Refresh your space with flawless finishes and colours that bring every room to life.',
+        image: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85',
+    },
 ];
 
 export function Header() {

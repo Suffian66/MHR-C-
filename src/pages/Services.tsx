@@ -55,6 +55,8 @@ export default function ServicePage() {
         'window-covering': 'window-covering',
         'drywall': 'drywall',
         'home-staging': 'home-staging',
+        'flooring': 'flooring',
+        'painting': 'painting',
     };
 
     const firebaseSlug = slug
@@ -74,8 +76,10 @@ export default function ServicePage() {
         'bathroom-renovation': 'Bathroom Renovations',
         'basement-renovation': 'Basement Renovations',
         'window-covering': 'Window Coverings',
-        drywall: 'Drywall',
+        'drywall': 'Drywall',
         'home-staging': 'Home Staging',
+        'flooring': 'Flooring',
+        'painting': 'Painting',
     };
 
     const serviceTitle = slug ? serviceTitles[slug] : undefined;
