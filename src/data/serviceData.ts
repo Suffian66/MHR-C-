@@ -623,15 +623,15 @@ export function getServiceDetails(
         galleryDescription: sections?.gallery?.paragraph1?.text,
         gallery: [
           {
-            image: getUrl(sections?.gallery?.image1?.imageId) || '/images/home-1.jpg',
+            image: getUrl(sections?.gallery?.image1?.imageId) || '/images/painting-4.jpg',
             caption: sections?.gallery?.heading2?.text,
           },
           {
-            image: getUrl(sections?.gallery?.image2?.imageId) || '/images/home-6.jpg',
+            image: getUrl(sections?.gallery?.image2?.imageId) || '/images/painting-6.jpg',
             caption: sections?.gallery?.heading3?.text,
           },
           {
-            image: getUrl(sections?.gallery?.image3?.imageId) || '/images/home-7.jpg',
+            image: getUrl(sections?.gallery?.image3?.imageId) || '/images/painting-7.jfif',
             caption: sections?.gallery?.heading4?.text,
           },
 
@@ -653,23 +653,23 @@ export function getServiceDetails(
         ctaTitle: sections?.cta?.heading1?.text,
         heroImages: [
           {
-            image: getUrl(sections.banner?.image1?.imageId) || "/images/home-8.jpg",
+            image: getUrl(sections.banner?.image1?.imageId) || "/images/painting-1.jpg",
             caption: "Modern kitchen renovation",
           },
           {
-            image: getUrl(sections.banner?.image2?.imageId) || "/images/home-2.jpg",
+            image: getUrl(sections.banner?.image2?.imageId) || "/images/painting-2.jpg",
             caption: "Custom kitchen cabinetry",
           },
           {
-            image: getUrl(sections.banner?.image3?.imageId) || "/images/home-3.jpg",
+            image: getUrl(sections.banner?.image3?.imageId) || "/images/painting-3.jpg",
             caption: "Premium kitchen finishes",
           },
           {
-            image: getUrl(sections.banner?.image4?.imageId) || "/images/home-4.jpg",
+            image: getUrl(sections.banner?.image4?.imageId) || "/images/painting-4.jpg",
             caption: "Kitchen island design",
           },
           {
-            image: getUrl(sections.banner?.image5?.imageId) || "/images/home-5.jpg",
+            image: getUrl(sections.banner?.image5?.imageId) || "/images/painting-5.jpg",
             caption: "Contemporary kitchen interiors",
           },
         ],

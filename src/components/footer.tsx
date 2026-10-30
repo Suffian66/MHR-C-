@@ -7,6 +7,7 @@ import {
     ArrowUpRight,
     MoveUpRight,
 } from 'lucide-react'
+import { FaFacebook, FaInstagram } from 'react-icons/fa'
 
 export function Footer() {
     return (
@@ -183,21 +184,24 @@ export function Footer() {
                         </p>
 
                         <div className="mt-5 flex gap-3">
-                            <button
-                                type="button"
-                                aria-label="Facebook"
-                                className="flex size-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all duration-300 hover:border-[#e87928] hover:bg-[#e87928] hover:text-white"
-                            >
-                                {/* <Facebook size={18} /> */}
-                            </button>
-
-                            <button
-                                type="button"
-                                aria-label="Instagram"
-                                className="flex size-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all duration-300 hover:border-[#e87928] hover:bg-[#e87928] hover:text-white"
-                            >
-                                {/* <Instagram size={18} /> */}
-                            </button>
+                            <Link to="https://www.facebook.com/profile.php?id=100063657801127" target="_blank" rel="noopener noreferrer">
+                                <button
+                                    type="button"
+                                    aria-label="Facebook"
+                                    className="flex size-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all duration-300 hover:border-[#e87928] hover:bg-[#e87928] hover:text-white"
+                                >
+                                    <FaFacebook size={18} />
+                                </button>
+                            </Link>
+                            <Link to="https://www.instagram.com/magichammerrenovation?rpxt=dDQxOXB5NHo0cTk0&utm_source=qr" target="_blank" rel="noopener noreferrer">
+                                <button
+                                    type="button"
+                                    aria-label="Instagram"
+                                    className="flex size-11 items-center justify-center rounded-full border border-white/15 text-white/70 transition-all duration-300 hover:border-[#e87928] hover:bg-[#e87928] hover:text-white"
+                                >
+                                    <FaInstagram size={18} />
+                                </button>
+                            </Link>
                         </div>
 
                         <div className="mt-8 border-l-2 border-[#e87928] pl-4">
