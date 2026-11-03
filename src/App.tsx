@@ -56,10 +56,10 @@ function App() {
                             element={<Media />}
                         />
 
-                        <Route
+                        {/* <Route
                             path="/admin/add-content"
                             element={<AddContent />}
-                        />
+                        /> */}
                     </Route>
                 </Routes>
             </BrowserRouter>

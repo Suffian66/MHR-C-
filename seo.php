@@ -1,6 +1,4 @@
-
 <?php
-declare(strict_types=1);
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +11,11 @@ declare(strict_types=1);
 const FIREBASE_PROJECT_ID = 'mhrc-43549';
 
 const SITE_URL = 'https://www.magichammerrenovations.com';
+
 const DEFAULT_TITLE = 'Magic Hammer Renovations | Home Renovations in Oakville';
+
 const DEFAULT_DESCRIPTION =
-    'Magic Hammer Renovations provides kitchen, bathroom and basement renovations, drywall, home staging and window coverings in Oakville, Ontario.';
+    'Magic Hammer Renovations provides kitchen, bathroom and basement renovations, drywall, home staging, flooring, painting and window coverings in Oakville, Ontario.';
 
 $indexFile = __DIR__ . '/index.html';
 
@@ -44,19 +44,23 @@ $routeToSlug = [
     '/contact' => 'contact',
     '/portfolio' => 'portfolio',
 
-    // All six service pages
+    // Service pages
     '/services/kitchen-renovation' => 'kitchen-renovation',
     '/services/bathroom-renovation' => 'bathroom-renovation',
     '/services/basement-renovation' => 'basement-renovation',
     '/services/window-covering' => 'window-covering',
     '/services/drywall' => 'drywall',
     '/services/home-staging' => 'home-staging',
+    '/services/flooring' => 'flooring',
+    '/services/painting' => 'painting',
 ];
 
 $requestPath = parse_url(
-    $_SERVER['REQUEST_URI'] ?? '/',
+    $_GET['route'] ?? $_SERVER['REQUEST_URI'] ?? '/',
     PHP_URL_PATH
 ) ?: '/';
+
+$requestPath = rtrim($requestPath, '/') ?: '/';
 
 if ($requestPath !== '/') {
     $requestPath = rtrim($requestPath, '/');
@@ -83,6 +87,7 @@ function firestoreRequest(
     string $method = 'GET',
     ?array $payload = null
 ): array {
+
     if (!function_exists('curl_init')) {
         throw new RuntimeException('PHP cURL extension is not enabled.');
     }
@@ -152,6 +157,7 @@ function firestoreValue(array $value): mixed
         'referenceValue',
         'bytesValue',
     ] as $type) {
+
         if (array_key_exists($type, $value)) {
             return $value[$type];
         }
@@ -338,7 +344,7 @@ function getPageMetadata(string $slug): array
 |--------------------------------------------------------------------------
 */
 
-$defaultCanonical = 'https://www.magichammerrenovations.com'
+$defaultCanonical = SITE_URL
     . ($requestPath === '/' ? '/' : $requestPath);
 
 $meta = [
@@ -349,6 +355,7 @@ $meta = [
 ];
 
 try {
+
     $firebaseMeta = getPageMetadata($slug);
 
     foreach (['title', 'description', 'keywords', 'canonical'] as $key) {
@@ -356,7 +363,9 @@ try {
             $meta[$key] = $firebaseMeta[$key];
         }
     }
+
 } catch (Throwable $exception) {
+
     // Keep the website available if Firestore is temporarily unavailable.
     error_log('[MHR SEO] ' . $exception->getMessage());
 }
@@ -382,12 +391,14 @@ $canonical = escapeHtml($meta['canonical']);
 |--------------------------------------------------------------------------
 */
 
+// Remove the existing title.
 $html = preg_replace(
     '~<title\b[^>]*>.*?</title>\s*~is',
     '',
     $html
 ) ?? $html;
 
+// Remove existing description, keywords, Open Graph and Twitter metadata.
 $html = preg_replace(
     '~<meta\b(?=[^>]*\b(?:name|property)\s*=\s*["\']'
     . '(?:description|keywords|og:title|og:description|og:url|'
@@ -397,6 +408,7 @@ $html = preg_replace(
     $html
 ) ?? $html;
 
+// Remove the existing canonical link.
 $html = preg_replace(
     '~<link\b(?=[^>]*\brel\s*=\s*["\']canonical["\'])'
     . '[^>]*>\s*~i',
@@ -404,6 +416,7 @@ $html = preg_replace(
     $html
 ) ?? $html;
 
+// Prepare updated metadata.
 $headMetadata = <<<HTML
 <title>{$title}</title>
 <meta name="description" content="{$description}">
@@ -425,7 +438,9 @@ $headMetadata .= <<<HTML
 <meta name="twitter:description" content="{$description}">
 HTML;
 
+// Inject the updated metadata into the HTML head.
 if (stripos($html, '</head>') !== false) {
+
     $html = preg_replace(
         '~</head>~i',
         $headMetadata . "\n</head>",
@@ -434,6 +449,7 @@ if (stripos($html, '</head>') !== false) {
     ) ?? $html;
 }
 
+// Return the final HTML.
 header('Content-Type: text/html; charset=UTF-8');
 header('Cache-Control: no-cache, must-revalidate');
 
