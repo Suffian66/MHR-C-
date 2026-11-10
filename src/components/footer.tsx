@@ -150,7 +150,7 @@ export function Footer() {
                                         Phone
                                     </p>
                                     <p className="mt-1 text-sm text-white/75">
-                                        (289) 855-5559
+                                        +1 (289) 855-5559
                                     </p>
                                 </div>
                             </div>
